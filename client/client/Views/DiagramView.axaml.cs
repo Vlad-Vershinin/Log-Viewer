@@ -5,11 +5,11 @@ using client.ViewModels;
 
 namespace client.Views;
 
-public partial class LogTableView : UserControl
+public partial class DiagramView : UserControl
 {
-    public LogTableView()
+    public DiagramView()
     {
         InitializeComponent();
-        DataContext = new LogTableViewModel();
+        DataContext = new DiagramViewModel();
     }
 }

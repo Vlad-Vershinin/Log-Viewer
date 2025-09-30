@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:client.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="client.Views.LogTableView"
-             x:DataType="vm:LogTableViewModel">
+             x:Class="client.Views.DiagramView"
+             x:DataType="vm:DiagramViewModel">
+
 
 	<Grid>
 		<Grid.RowDefinitions>
@@ -17,8 +18,6 @@
 			<ColumnDefinition></ColumnDefinition>
 		</Grid.ColumnDefinitions>
 
-		<Button Content="Диаграммы" Margin="5" Command="{Binding CreateBoardCommand}"></Button>
-		
-		
+		<Button Content="Логи" Margin="5"></Button>
 	</Grid>
 </UserControl>

@@ -19,7 +19,7 @@ namespace client
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new LogTableViewModel()
+                    DataContext = new MainWindowViewModel()
                 };
             }
             
