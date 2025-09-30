@@ -9,7 +9,7 @@
 
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="0.15*"></RowDefinition>
+			<RowDefinition Height="0.1*"></RowDefinition>
 			<RowDefinition></RowDefinition>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
@@ -18,6 +18,26 @@
 		</Grid.ColumnDefinitions>
 
 		<Button Content="Диаграммы" Margin="5" Command="{Binding CreateBoardCommand}"></Button>
+
+		<Border Grid.ColumnSpan="2" Grid.Row="1" Background="AliceBlue" Margin="5">
+			<DataGrid AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsReadOnly="True"
+					  CanUserReorderColumns="True"
+					  CanUserResizeColumns="True"
+					  CanUserSortColumns="False"
+					  GridLinesVisibility="All"
+					  BorderThickness="1" BorderBrush="Gray">
+				<DataGrid.Columns>
+					<DataGridCheckBoxColumn Header="Скрыть"></DataGridCheckBoxColumn>
+					<DataGridTextColumn Header="Время"></DataGridTextColumn>
+					<DataGridTextColumn Header="Вид лога"></DataGridTextColumn>
+					<DataGridTemplateColumn Header="Содержание"></DataGridTemplateColumn>
+				</DataGrid.Columns>
+			</DataGrid>
+		</Border>
+		
+		
+		
+		
 		
 		
 	</Grid>
