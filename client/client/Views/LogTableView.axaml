@@ -19,18 +19,13 @@
 
 		<Button Content="Диаграммы" Margin="5" Command="{Binding CreateBoardCommand}"></Button>
 
-		<Border Grid.ColumnSpan="2" Grid.Row="1" Background="AliceBlue" Margin="5">
-			<DataGrid AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsReadOnly="True"
-					  CanUserReorderColumns="True"
-					  CanUserResizeColumns="True"
-					  CanUserSortColumns="False"
-					  GridLinesVisibility="All"
-					  BorderThickness="1" BorderBrush="Gray">
+		<Border Grid.ColumnSpan="2" Grid.Row="1" Margin="5">
+			<DataGrid AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CanUserResizeColumns="True" IsEnabled="True">
 				<DataGrid.Columns>
-					<DataGridCheckBoxColumn Header="Скрыть"></DataGridCheckBoxColumn>
-					<DataGridTextColumn Header="Время"></DataGridTextColumn>
-					<DataGridTextColumn Header="Вид лога"></DataGridTextColumn>
-					<DataGridTemplateColumn Header="Содержание"></DataGridTemplateColumn>
+					<DataGridCheckBoxColumn Header="Скрыть" Width="0.15*"/>
+					<DataGridTextColumn Header="Время" Width="0.4*"/>
+					<DataGridTextColumn Header="Вид лога" Width="0.2*"/>
+					<DataGridTemplateColumn Header="Содержание"  Width="0.5*"/>
 				</DataGrid.Columns>
 			</DataGrid>
 		</Border>
