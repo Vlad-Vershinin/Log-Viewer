@@ -8,5 +8,5 @@
         x:Class="client.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="client">
-        <views:MainView />
+        <views:LogTableView />
 </Window>
