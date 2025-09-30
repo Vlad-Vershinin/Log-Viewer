@@ -19,16 +19,10 @@ namespace client
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainViewModel()
+                    DataContext = new LogTableViewModel()
                 };
             }
-            else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
-            {
-                singleViewPlatform.MainView = new MainView
-                {
-                    DataContext = new MainViewModel()
-                };
-            }
+            
 
             base.OnFrameworkInitializationCompleted();
         }
