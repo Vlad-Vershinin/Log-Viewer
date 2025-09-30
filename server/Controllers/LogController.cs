@@ -3,15 +3,10 @@
 namespace server.Controllers;
 
 [ApiController]
-[Route("api/[controler]")]
+[Route("api/[controller]")]
 public class LogController : ControllerBase
 {
-    public LogController()
-    {
-
-    }
-
-    [HttpPost("log")]
+    [HttpPost("load")]
     public async Task<IActionResult> UploadLogs()
     {
         if (string.IsNullOrEmpty(Request.Body.ToString()))
