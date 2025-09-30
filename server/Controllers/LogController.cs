@@ -9,7 +9,10 @@ public class LogController : ControllerBase
     [HttpPost("load")]
     public async Task<IActionResult> UploadLogs()
     {
-        if (string.IsNullOrEmpty(Request.Body.ToString()))
+        using var reader = new StreamReader(Request.Body);
+        var body = await reader.ReadToEndAsync();
+
+        if (string.IsNullOrEmpty(body))
             return BadRequest("File is empty");
         else
         {
