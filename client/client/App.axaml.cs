@@ -32,7 +32,7 @@ namespace client
                     DataContext = new LogTableViewModel()
                 };
             }
-            
+
 
             base.OnFrameworkInitializationCompleted();
         }

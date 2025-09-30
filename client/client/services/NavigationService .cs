@@ -56,14 +56,5 @@ namespace client.services
 
             this.RaisePropertyChanged(nameof(CurrentUserControl));
         }
-
-        public void GoBack()
-        {
-            if (!CanGoBack)
-                return;
-
-            CurrentUserControl = _navigationStack.Pop();
-            this.RaisePropertyChanged(nameof(CurrentUserControl));
-        }
     }
 }
