@@ -8,6 +8,8 @@ namespace client
 {
     public partial class App : Application
     {
+        public static object ServiceProvider { get; internal set; }
+
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
