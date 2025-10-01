@@ -24,5 +24,6 @@
     <PackageReference Include="Avalonia.ReactiveUI" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" />
     <PackageReference Include="Newtonsoft.Json" />
+    <PackageReference Include="ReactiveUI.Fody" />
   </ItemGroup>
 </Project>

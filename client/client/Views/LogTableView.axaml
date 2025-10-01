@@ -3,6 +3,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:client.ViewModels"
+			 xmlns:local="using:AvaloniaSample"
+			 xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="client.Views.LogTableView"
              x:DataType="vm:LogTableViewModel">
@@ -11,8 +13,8 @@
 	
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="0.1*"></RowDefinition>
 			<RowDefinition></RowDefinition>
+			<RowDefinition Height="80"></RowDefinition>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="0.25*"></ColumnDefinition>
@@ -20,37 +22,88 @@
 
 		</Grid.ColumnDefinitions>
 
-		<StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
-			<TextBox Margin="5" VerticalAlignment="Bottom" Watermark="Поиск"></TextBox>
-		</StackPanel>
-		<ScrollContentPresenter Background="#000a2c" Grid.Row="1" Margin="5"></ScrollContentPresenter>
-		
-		
-		
-		<Button Background="DarkOrange" VerticalAlignment="Bottom" Margin="5" Content="Фильтры" Grid.Column="1"></Button>
-		
-		
-		
-		
-		<StackPanel HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Bottom" Orientation="Horizontal">
-			<Button Margin="0,5,0,5" Content="--|"></Button>
-			<Button Margin="0,5,5,5" Content="-|"></Button>
-			<TextBox Margin="0,5,0,5" VerticalContentAlignment="Center" VerticalAlignment="Center"></TextBox>
-			<Button Margin="5,5,0,5" Content="|-"></Button>
-			<Button Margin="0,5,0,5" Content="|--"></Button>
-			<Button Content="Обновить"  Background="Green" Margin="5" Command="{Binding CreateBoardCommand}"></Button>
 
-		</StackPanel>
+		<DockPanel>
+			<StackPanel DockPanel.Dock="Top" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+				<TextBox Margin="5" VerticalAlignment="Bottom" Watermark="Поиск"></TextBox>
+			</StackPanel>
+			<ScrollViewer Background="#000a2c" Grid.Row="0" Margin="5">
+				<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+					
+					<Border BorderThickness="0" BorderBrush="AliceBlue" VerticalAlignment="Stretch" MinHeight="200">
+						<lvc:CartesianChart Margin="5" Background="#1d2251" DataContext="{Binding TestChart}" Title="{Binding Title}" Series="{Binding Series}"></lvc:CartesianChart>
+					</Border>
+					<Border BorderThickness="0" BorderBrush="AliceBlue" VerticalAlignment="Stretch" MinHeight="200">
+						<lvc:CartesianChart Margin="5" Background="#1d2251" DataContext="{Binding TestChart}" Title="{Binding Title}" Series="{Binding Series}"></lvc:CartesianChart>
+					</Border>
+					<Border BorderThickness="0" BorderBrush="AliceBlue" VerticalAlignment="Stretch" MinHeight="200">
+						<lvc:CartesianChart Margin="5" Background="#1d2251" DataContext="{Binding TestChart}" Title="{Binding Title}" Series="{Binding Series}"></lvc:CartesianChart>
+					</Border>
+					<Border BorderThickness="0" BorderBrush="AliceBlue" VerticalAlignment="Stretch" MinHeight="200">
+						<lvc:CartesianChart Margin="5" Background="#1d2251" DataContext="{Binding TestChart}" Title="{Binding Title}" Series="{Binding Series}"></lvc:CartesianChart>
+					</Border>
+					
+				</StackPanel>
+			</ScrollViewer>
 
-		<TreeDataGrid></TreeDataGrid>
-		
-		<Border Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="1" Margin="5">
+		</DockPanel>
+		<ScrollViewer  Margin="5,0,5,5" Grid.Row="1" Grid.ColumnSpan="2">
+			<ListBox Background="#1e2b55">
+				
+				
+				
+				
+				
+			</ListBox>
 			
-		</Border>
-		
-		
-		
-		
+		</ScrollViewer>
+
+
+
+		<DockPanel Grid.Row="0" Grid.Column="1">
+			<DockPanel DockPanel.Dock="Top">
+				<Button DockPanel.Dock="Left" Background="#9e4a16" VerticalAlignment="Bottom" Margin="0,5,5,5" Content="Фильтры" Grid.Column="1"></Button>
+				<StackPanel DockPanel.Dock="Right" HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Bottom" Orientation="Horizontal">
+					<Button Margin="0,5,0,5"> <Image Source="avares://client/Assets/ArrowLeftGreat.png" Height="20"/> </Button>
+					<Button Margin="0,5,5,5"> <Image Source="avares://client/Assets/ArrowLeft.png" Height="20"/> </Button>
+					<TextBox Margin="0,5,0,5" Text="{Binding CurrentPage}" VerticalContentAlignment="Center" VerticalAlignment="Center"></TextBox>
+					<Button Margin="5,5,0,5"> <Image Source="avares://client/Assets/ArrowRight.png" Height="20"/> </Button>
+					<Button Margin="0,5,0,5"> <Image Source="avares://client/Assets/ArrowRightGreat.png" Height="20"/> </Button>
+					<Button Content="Обновить"  Background="Green" Margin="5" Command="{Binding CreateBoardCommand}"></Button>
+					<Button Margin="5" Command="{Binding OpenOptionPane}">
+						<Image Source="avares://client/Assets/Additional.png" Height="20"/>
+					</Button>
+					
+				</StackPanel>
+			</DockPanel>
+			<Border VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="1" Margin="0,5,5,5">
+				<TreeDataGrid Source="{Binding LogsSource}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+					
+				</TreeDataGrid>
+			
+			</Border>
+			
+		</DockPanel>
+
+
+
+
+
+		<SplitView  Name="OptionPaneViewerGUI" Grid.ColumnSpan="2" Grid.RowSpan="2" IsPaneOpen="{Binding IsOptionPaneIsOpen, Mode=TwoWay}" PanePlacement="Right">
+			<SplitView.Pane>
+				<Border Background="#0e004e">
+					<Border Margin="5" Background="#0d0035">
+						<StackPanel>
+							<Button Content="Имрорт логов (*.json | *.txt)" HorizontalAlignment="Stretch"></Button>
+							<Button Content="Параметры" HorizontalAlignment="Stretch"></Button>
+							<Button Content="Выйти из сессии" HorizontalAlignment="Stretch"></Button>
+						</StackPanel>
+					</Border>
+				</Border>
+			</SplitView.Pane>
+			<SplitView.Content>
+			</SplitView.Content>
+		</SplitView>
 		
 		
 	</Grid>
