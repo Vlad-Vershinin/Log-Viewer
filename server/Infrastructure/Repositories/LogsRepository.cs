@@ -14,12 +14,18 @@ public class LogsRepository : ILogsRepository
         _context = context;
     }
 
-    public Task<List<ParsedLog>> GetLogs(PromptPacket prompts)
+    public async Task<List<ParsedLog>> GetLogsAsync(PromptPacket prompts)
     {
-        throw new NotImplementedException();
+        var res = await _context.ParsedLogs
+            .Where(log => log.SessionName == prompts.SessionName && log.Filename == prompts.Filename && (!log.IsHidden || prompts.ShowHidden))
+            .Skip(prompts.LogsPerPage * prompts.Page + prompts.Pivot)
+            .Take(prompts.LogsPerPage)
+            .ToListAsync();
+
+        return res ?? new List<ParsedLog>();
     }
 
-    public async Task UploadLogsToDB(List<ParsedLog> parsedLogs)
+    public async Task UploadLogsToDBAsync(List<ParsedLog> parsedLogs)
     {
         foreach (ParsedLog log in parsedLogs) {
             await _context.ParsedLogs.AddAsync(log);

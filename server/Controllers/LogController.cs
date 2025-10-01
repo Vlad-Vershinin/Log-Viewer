@@ -11,7 +11,7 @@ public class LogController : ControllerBase
 {
     private readonly ILogsService _parserService;
 
-    [HttpPost("load")]
+    [HttpPost("logs")]
     public async Task<IActionResult> UploadLogs(FilesPacket dto)
     {
         //using var reader = new StreamReader(Request.Body);
@@ -31,9 +31,9 @@ public class LogController : ControllerBase
         return Ok();
     }
 
-    //[HttpPost("get")]
-    //public async Task<List<ParsedLog>> GetLogs(PromptPacket dto)
-    //{
-
-    //}
+    [HttpGet("logs")]
+    public async Task<List<ParsedLog>> GetLogs(PromptPacket dto)
+    {
+        return _parserService.GetLogs(dto);
+    }
 }

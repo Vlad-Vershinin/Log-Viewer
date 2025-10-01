@@ -65,6 +65,11 @@ public class LogsService : ILogsService
             result.Add(log);
             index++;
         }
-        _logsRepository.UploadLogsToDB(result);
+        _logsRepository.UploadLogsToDBAsync(result);
+    }
+
+    public List<ParsedLog> GetLogs(PromptPacket prompts)
+    {
+        return _logsRepository.GetLogsAsync(prompts);
     }
 }

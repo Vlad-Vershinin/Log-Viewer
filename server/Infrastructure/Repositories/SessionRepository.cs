@@ -31,14 +31,4 @@ public class SessionRepository : ISessionRepository
     {
         return;
     }
-
-    public async Task<List<ParsedLog>> LoadSessionAsync(Session session)
-    {
-        var res = await _context.UserSessions
-            .Where(s => s.SessionName == session.SessionName)
-            .Include(s => s.ParsedLogs)
-            .FirstOrDefaultAsync();
-
-        return res?.ParsedLogs ?? new List<ParsedLog>();
-    }
 }

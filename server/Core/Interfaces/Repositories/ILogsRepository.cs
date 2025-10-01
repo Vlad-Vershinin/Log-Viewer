@@ -4,6 +4,6 @@ namespace server.Core.Interfaces.Repositories;
 
 public interface ILogsRepository
 {
-    Task<List<ParsedLog>> GetLogs(PromptPacket prompts);
-    Task UploadLogsToDB(List<ParsedLog> parsedLogs);
+    Task<List<ParsedLog>> GetLogsAsync(PromptPacket prompts);
+    Task UploadLogsToDBAsync(List<ParsedLog> parsedLogs);
 }
