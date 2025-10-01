@@ -23,7 +23,7 @@ using LiveChartsCore.SkiaSharpView.VisualElements;
 
 namespace client.ViewModels
 {
-    
+
 
     public class LogTableViewModel : ViewModelBase
     {
@@ -57,19 +57,7 @@ namespace client.ViewModels
 
         public TestChartViewModel TestChart { get; set; } = new TestChartViewModel();
 
-<<<<<<< HEAD
-        private readonly ObservableCollection<LogEntry> _logEntries;
 
-        private readonly INavigationService _navigationService;
-
-        public LogTableViewModel(INavigationService navigationService)
-        {
-            _logEntries = new ObservableCollection<LogEntry>();
-
-            InitializeSampleData();
-
-            _navigationService = navigationService;
-=======
         public LogTableViewModel()
         {
 
@@ -111,16 +99,42 @@ namespace client.ViewModels
                 },
             };
 
-            
+
         }
 
-        /*
- <DataGridCheckBoxColumn Header="Скрыть" Binding="{Binding IsHidden}" Width="0.15*"/>
-					<DataGridTextColumn Header="Время" Binding="{Binding Timestamp}" Width="0.4*"/>
-					<DataGridTextColumn Header="Вид лога" Binding="{Binding Level}" Width="0.2*"/>
-					<DataGridTemplateColumn Header="Содержание" Binding="{Binding Message}" Width="0.5*"/>
- */
-        public ObservableCollection<LogEntry> LogEntries => _logEntries;
+
+
+
+
+
+
+
+
+
+        public async Task ToNextPage()
+        {
+            CurrentPage = Math.Clamp(CurrentPage++, 0, MaxPage);
+        }
+        public async Task ToPreviousPage()
+        {
+            CurrentPage = Math.Clamp(CurrentPage--, 0, MaxPage);
+
+        }
+        public async Task ToLastPage()
+        {
+            CurrentPage = Math.Clamp(CurrentPage++, 0, MaxPage);
+
+        }
+        public async Task ToFirstPage()
+        {
+            CurrentPage = Math.Clamp(CurrentPage--, 0, MaxPage);
+        }
+
+
+
+
+
+
 
         private async Task OpenPane()
         {
@@ -129,24 +143,8 @@ namespace client.ViewModels
         private void SwitchToDiagramPage()
         {
             // Blank
-        public ObservableCollection<LogEntry> LogEntries1 => _logEntries;
-
-        private void InitializeSampleData()
-        {
-            var logs = new List<LogEntry>
-        {
-            new() { Time = DateTime.Now, Type = "info", Content = "Application started" },
-            new() { Time = DateTime.Now, Type = "debug", Content = "Debug information" },
-            new() { Time = DateTime.Now, Type = "warn", Content = "Warning message" },
-            new() { Time = DateTime.Now, Type = "error", Content = "Error occurred" },
-            new() { Time = DateTime.Now, Type = "trace", Content = "Trace details" }
-        };
-
-            foreach (var log in logs)
-            {
-                _logEntries.Add(log);
-            }
         }
+
 
     }
 

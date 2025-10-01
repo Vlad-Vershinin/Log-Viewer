@@ -20,8 +20,6 @@ namespace client.ViewModels
             set => this.RaiseAndSetIfChanged(ref _sessionName, value);
         }
 
-        public ReactiveCommand<Unit, Unit> CommandToLogIn { get; }
-
         public ReactiveCommand<Unit, Unit> CommandToLogIn { get; set; }
 
         private readonly INavigationService _navigationService;
@@ -33,7 +31,7 @@ namespace client.ViewModels
         public LoginViewModel(INavigationService navigationService)
         {
             CommandToLogIn = ReactiveCommand.Create(Login);
-            CommandToLogIn = ReactiveCommand.Create(LoginToNextPage);
+            //CommandToLogIn = ReactiveCommand.Create(LoginToNextPage);
 
             _navigationService = navigationService;
         }

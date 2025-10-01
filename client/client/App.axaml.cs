@@ -13,7 +13,8 @@ namespace client
 {
     public partial class App : Application
     {
-        public IServiceProvider ServiceProvider { get; private set; }
+        private IServiceProvider? _serviceProvider;
+        public static IServiceProvider? ServiceProvider { get; private set; }
 
         public override void Initialize()
         {
@@ -27,9 +28,12 @@ namespace client
 
             services.AddTransient<MainWindowViewModel>();
             services.AddTransient<LogTableViewModel>();
+            services.AddTransient<DiagramViewModel>();
+            services.AddTransient<LoginViewModel>();
 
 
-            ServiceProvider = services.BuildServiceProvider();
+            _serviceProvider = services.BuildServiceProvider();
+            ServiceProvider = _serviceProvider;
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
