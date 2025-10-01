@@ -1,12 +1,10 @@
 using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using client.services;
 using client.services.interfaces;
 using client.ViewModels;
 using client.Views;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace client
 {
@@ -22,11 +20,17 @@ namespace client
         public override void OnFrameworkInitializationCompleted()
         {
             var service = new ServiceCollection();
-            service.AddSingleton(typeof(INavigationService), typeof(NavigationService));
+            services.AddSingleton<INavigationService, NavigationService>();
 
+            services.AddTransient<MainWindowViewModel>();
+            services.AddTransient<LogTableViewModel>();
+
+
+            ServiceProvider = services.BuildServiceProvider();
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
+                MainWindowViewModel mainViewModel = ServiceProvider.GetRequiredService<MainWindowViewModel>();
                 desktop.MainWindow = new MainWindow
                 {
                     DataContext = new MainWindowViewModel()

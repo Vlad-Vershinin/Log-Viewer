@@ -1,5 +1,7 @@
 ﻿using Avalonia.Controls;
 using client.services.interfaces;
+using client.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -38,6 +40,7 @@ namespace client.services
         {
             NavigateTo(typeof(T));
         }
+
 
         public void NavigateTo(Type windowType)
         {

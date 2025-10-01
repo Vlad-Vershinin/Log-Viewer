@@ -26,6 +26,7 @@ namespace client.ViewModels
 
         public IReactiveList<LogEntry> LogEntries => _logEntries;
 
+        public ReactiveList<LogEntry> LogEntries1 => _logEntries;
 
         private void InitializeSampleData()
         {
