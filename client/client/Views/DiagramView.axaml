@@ -17,6 +17,8 @@
 			<ColumnDefinition Width="0.25*"></ColumnDefinition>
 			<ColumnDefinition></ColumnDefinition>
 		</Grid.ColumnDefinitions>
+		
+		
 
 		<Button Content="Логи" Margin="5"></Button>
 	</Grid>
