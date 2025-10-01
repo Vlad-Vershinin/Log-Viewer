@@ -8,8 +8,8 @@ public class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-    public DbSet<UserSession> UserSessions { get; set; }
-    public DbSet<ParsedLog> ParsedLogs { get; set; }
+    DbSet<Session> UserSessions { get; set; }
+    DbSet<ParsedLog> ParsedLogs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

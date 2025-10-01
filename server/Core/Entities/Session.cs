@@ -2,10 +2,10 @@
 
 namespace server.Core.Entities;
 
-public class UserSession
+public class Session
 {
     [Required]
-    public string UserSessionName { get; set; } = string.Empty;
+    public string SessionName { get; set; } = string.Empty;
 
     public List<ParsedLog>? ParsedLogs { get; set; }
 }

@@ -1,0 +1,29 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Design.PreviewWith>
+    <Border Padding="20">
+      <!-- Add Controls for Previewer Here -->
+    </Border>
+  </Design.PreviewWith>
+
+	<Style Selector="Window">
+		<Setter Property="Background">
+			<Setter.Value>
+				<LinearGradientBrush>
+					<GradientStop Color="#050013"></GradientStop>
+					<GradientStop Color="#030027"></GradientStop>
+				</LinearGradientBrush>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	<Style Selector="DataGridColumnHeader">
+		<Setter Property="Background" Value="#000a2c"></Setter>
+	</Style>
+
+	<Style Selector="TextBox">
+		<Setter Property="BorderBrush" Value="#002d8e"></Setter>
+	</Style>
+    
+
+	
+</Styles>

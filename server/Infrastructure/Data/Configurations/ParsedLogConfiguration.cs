@@ -11,7 +11,7 @@ public class ParsedLogConfiguration : IEntityTypeConfiguration<ParsedLog>
         builder.HasKey(pl => new { pl.Filename, pl.Timestamp });
 
         builder
-            .HasOne(us => us.UserSession)
+            .HasOne(us => us.Session)
             .WithMany(ps => ps.ParsedLogs)
             .HasForeignKey(pl => pl.SessionName)
             .OnDelete(DeleteBehavior.Cascade);
