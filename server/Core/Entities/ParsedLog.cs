@@ -1,7 +1,7 @@
 using Newtonsoft.Json.Linq;
 using System.ComponentModel.DataAnnotations;
 
-namespace server.Core.DTOs.Entities;
+namespace server.Core.Entities;
 
 public class ParsedLog
 {

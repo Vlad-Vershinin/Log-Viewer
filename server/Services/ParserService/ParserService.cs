@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
-using server.Core.DTOs.Entities;
+using server.Core.Entities;
 using server.Core.Interfaces;
 
 namespace server.Services.ParserService;
 
 public class ParserService : IParserService
 {
-    public List<ParsedLog> parse(string json_data, string filename)
+    public List<ParsedLog> Parse(string json_data, string filename)
     {
         List<ParsedLog> result = new List<ParsedLog>();
         foreach (string line in json_data.Split("\n"))
