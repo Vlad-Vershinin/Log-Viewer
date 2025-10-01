@@ -16,7 +16,7 @@ public class SessionController : ControllerBase
     }
 
     [HttpPost("connect")]
-    public async Task<IActionResult> CreateSession([FromForm] string session)
+    public async Task<IActionResult> CreateSession([FromBody] string session)
     {
         if (string.IsNullOrWhiteSpace(session))
         {

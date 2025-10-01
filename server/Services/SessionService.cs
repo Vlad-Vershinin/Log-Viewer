@@ -4,11 +4,11 @@ using server.Core.Interfaces.Services;
 
 namespace server.Services;
 
-public class SessionSevice : ISessionService
+public class SessionService : ISessionService
 {
     private readonly ISessionRepositry _sessionRepositry;
 
-    public SessionSevice(ISessionRepositry sessionRepositry)
+    public SessionService(ISessionRepositry sessionRepositry)
     {
         _sessionRepositry = sessionRepositry;
     }
