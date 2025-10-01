@@ -13,9 +13,9 @@ public class SessionService : ISessionService
         _sessionRepositry = sessionRepositry;
     }
 
-    public async Task CreateSession(UserSession userSession)
+    public async Task CreateSession(Session userSession)
     {
-        if (string.IsNullOrWhiteSpace(userSession.UserSessionName))
+        if (string.IsNullOrWhiteSpace(userSession.SessionName))
         {
             return;
         }
@@ -23,7 +23,7 @@ public class SessionService : ISessionService
         await _sessionRepositry.CreateSessionAsync(userSession);
     }
 
-    public async Task DeleteSession(UserSession userSession)
+    public async Task DeleteSession(Session userSession)
     {
         await _sessionRepositry.DeleteSessionAsync(userSession);
     }

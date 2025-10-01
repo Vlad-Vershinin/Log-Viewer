@@ -4,8 +4,8 @@ namespace server.Core.Interfaces.Repositories;
 
 public interface ISessionRepositry
 {
-    Task CreateSessionAsync(UserSession session);
-    Task GetSessionAsync(UserSession session);
-    Task<List<ParsedLog>> LoadSessionAsync(UserSession session);
-    Task DeleteSessionAsync(UserSession session);
+    Task CreateSessionAsync(Session session);
+    Task GetSessionAsync(Session session);
+    Task<List<ParsedLog>> LoadSessionAsync(Session session);
+    Task DeleteSessionAsync(Session session);
 }

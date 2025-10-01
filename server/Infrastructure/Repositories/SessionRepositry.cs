@@ -14,28 +14,28 @@ public class SessionRepositry : ISessionRepositry
         _context = context;
     }
 
-    public async Task CreateSessionAsync(UserSession session)
+    public async Task CreateSessionAsync(Session session)
     {
         await _context.UserSessions.AddAsync(session);
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteSessionAsync(UserSession session)
+    public async Task DeleteSessionAsync(Session session)
     {
-        var entity = await _context.UserSessions.FindAsync(session.UserSessionName);
+        var entity = await _context.UserSessions.FindAsync(session.SessionName);
         _context.UserSessions.Remove(entity!);
         await _context.SaveChangesAsync();
     }
 
-    public async Task GetSessionAsync(UserSession session)
+    public async Task GetSessionAsync(Session session)
     {
         return;
     }
 
-    public async Task<List<ParsedLog>> LoadSessionAsync(UserSession session)
+    public async Task<List<ParsedLog>> LoadSessionAsync(Session session)
     {
         var res = await _context.UserSessions
-            .Where(s => s.UserSessionName == session.UserSessionName)
+            .Where(s => s.SessionName == session.SessionName)
             .Include(s => s.ParsedLogs)
             .FirstOrDefaultAsync();
 
