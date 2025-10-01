@@ -7,45 +7,82 @@
              x:Class="client.Views.LogTableView"
              x:DataType="vm:LogTableViewModel">
 
+	<UserControl.Resources>
+		<TextColorConverter x:Key="TextColorConverter"/>
+	</UserControl.Resources>
+
+
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="0.1*"></RowDefinition>
-			<RowDefinition></RowDefinition>
+			<RowDefinition Height="0.1*"/>
+			<RowDefinition/>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="0.25*"></ColumnDefinition>
-			<ColumnDefinition></ColumnDefinition>
-
+			<ColumnDefinition Width="0.25*"/>
+			<ColumnDefinition/>
 		</Grid.ColumnDefinitions>
 
-		<Button Content="Диаграммы" Margin="5" Command="{Binding CreateBoardCommand}"></Button>
-
+		<Button Content="Диаграммы" Margin="5" Command="{Binding CreateBoardCommand}"/>
 
 		<StackPanel HorizontalAlignment="Right" Grid.Column="1" Orientation="Horizontal">
-			<Button Margin="0,5,0,5" Content="--|"></Button>
-			<Button Margin="0,5,5,5" Content="-|"></Button>
-			<TextBox Margin="0,5,0,5" VerticalContentAlignment="Center"></TextBox>
-			<Button Margin="5,5,0,5" Content="|-"></Button>
-			<Button Margin="0,5,0,5" Content="|--"></Button>
-			<Button Content="Обновить"  Background="Green" Margin="5" Command="{Binding CreateBoardCommand}"></Button>
+			<Button Margin="0,5,0,5" Content="--|"/>
+			<Button Margin="0,5,5,5" Content="-|"/>
+			<TextBox Margin="0,5,0,5" VerticalContentAlignment="Center"/>
+			<Button Margin="5,5,0,5" Content="|-"/>
+			<Button Margin="0,5,0,5" Content="|--"/>
+			<Button Content="Обновить" Background="Green" Margin="5" Command="{Binding CreateBoardCommand}"/>
 		</StackPanel>
-		
 
-		<Border Grid.ColumnSpan="3" Grid.Row="1" Margin="5">
-			<DataGrid ColumnHeaderHeight="30" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CanUserResizeColumns="True" IsEnabled="True">
+		<Border Grid.ColumnSpan="2" Grid.Row="1" Margin="5">
+			<DataGrid ItemsSource="{Binding LogEntries}"
+                      ColumnHeaderHeight="30"
+                      AutoGenerateColumns="False"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+                      CanUserResizeColumns="True"
+                      IsEnabled="True"
+                      RowBackground="Transparent">
+
+				<DataGrid.RowStyle>
+					<Style Selector="DataGridRow">
+						<Setter Property="Background" Value="{Binding BackgroundColor}"/>
+						<Setter Property="Foreground" Value="{Binding BackgroundColor, Converter={StaticResource TextColorConverter}}"/>
+					</Style>
+				</DataGrid.RowStyle>
+
 				<DataGrid.Columns>
-					<DataGridCheckBoxColumn Header="Скрыть" Width="0.15*"/>
-					<DataGridTextColumn Header="Время" Width="0.4*"/>
-					<DataGridTextColumn Header="Вид лога" Width="0.2*"/>
-					<DataGridTemplateColumn Header="Содержание"  Width="0.5*"/>
+					<DataGridCheckBoxColumn Header="Скрыть" Width="0.15*" Binding="{Binding IsHidden}"/>
+
+					<DataGridTextColumn Header="Время" Width="0.4*" Binding="{Binding Time, StringFormat='HH:mm:ss'}">
+						<DataGridTextColumn.ElementStyle>
+							<Style Selector="TextBlock">
+								<Setter Property="HorizontalAlignment" Value="Center"/>
+								<Setter Property="VerticalAlignment" Value="Center"/>
+							</Style>
+						</DataGridTextColumn.ElementStyle>
+					</DataGridTextColumn>
+
+					<DataGridTextColumn Header="Вид лога" Width="0.2*" Binding="{Binding Type}">
+						<DataGridTextColumn.ElementStyle>
+							<Style Selector="TextBlock">
+								<Setter Property="HorizontalAlignment" Value="Center"/>
+								<Setter Property="VerticalAlignment" Value="Center"/>
+								<Setter Property="FontWeight" Value="Bold"/>
+								<Setter Property="TextTransform" Value="Uppercase"/>
+							</Style>
+						</DataGridTextColumn.ElementStyle>
+					</DataGridTextColumn>
+
+					<DataGridTextColumn Header="Содержание" Width="0.5*" Binding="{Binding Content}">
+						<DataGridTextColumn.ElementStyle>
+							<Style Selector="TextBlock">
+								<Setter Property="TextWrapping" Value="Wrap"/>
+								<Setter Property="VerticalAlignment" Value="Center"/>
+							</Style>
+						</DataGridTextColumn.ElementStyle>
+					</DataGridTextColumn>
 				</DataGrid.Columns>
 			</DataGrid>
 		</Border>
-		
-		
-		
-		
-		
-		
 	</Grid>
 </UserControl>
