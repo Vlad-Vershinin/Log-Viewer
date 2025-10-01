@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using server.Core.Entities;
 using server.Core.Interfaces;
+using server.Core.Interfaces.Services;
 
 namespace server.Services.ParserService;
 

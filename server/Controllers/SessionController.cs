@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using server.Core.Entities;
+using server.Core.Interfaces.Services;
 
 namespace server.Controllers;
 
@@ -6,14 +8,35 @@ namespace server.Controllers;
 [Route("api/[controller]")]
 public class SessionController : ControllerBase
 {
-    [HttpPost("create")]
-    public async Task<IActionResult> CreateSession([FromForm] string name)
+    private readonly ISessionService _sessionService;
+
+    public SessionController(ISessionService sessionService)
     {
-        if (string.IsNullOrWhiteSpace(name))
+        _sessionService = sessionService;
+    }
+
+    [HttpPost("connect")]
+    public async Task<IActionResult> CreateSession([FromForm] string session)
+    {
+        if (string.IsNullOrWhiteSpace(session))
         {
-            return BadRequest("Name is empty");
+            return BadRequest("Session name is empty");
         }
 
+        await _sessionService.CreateSession(new UserSession { UserSessionName = session });
+
+        return Ok();
+    }
+
+    [HttpDelete("delete")]
+    public async Task<IActionResult> DeleteSession([FromForm] string session)
+    {
+        if (string.IsNullOrWhiteSpace(session))
+        {
+            return BadRequest("Session name is empty");
+        }
+
+        await _sessionService.DeleteSession(new UserSession { UserSessionName = session });
         return Ok();
     }
 }
