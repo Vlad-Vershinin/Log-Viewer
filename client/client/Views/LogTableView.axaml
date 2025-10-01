@@ -7,16 +7,11 @@
              x:Class="client.Views.LogTableView"
              x:DataType="vm:LogTableViewModel">
 
-<<<<<<< HEAD
 	<UserControl.Resources>
 		<TextColorConverter x:Key="TextColorConverter"/>
 	</UserControl.Resources>
 
 
-=======
-	
-	
->>>>>>> 0f1a112b3f96582bc28ba8a00c2206cf891c24b1
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="0.1*"/>
@@ -27,7 +22,6 @@
 			<ColumnDefinition/>
 		</Grid.ColumnDefinitions>
 
-<<<<<<< HEAD
 		<Button Content="Диаграммы" Margin="5" Command="{Binding CreateBoardCommand}"/>
 
 		<StackPanel HorizontalAlignment="Right" Grid.Column="1" Orientation="Horizontal">
@@ -39,7 +33,7 @@
 			<Button Content="Обновить" Background="Green" Margin="5" Command="{Binding CreateBoardCommand}"/>
 		</StackPanel>
 
-		<Border Grid.ColumnSpan="2" Grid.Row="1" Margin="5">
+		<Border Grid.ColumnSpan="2" Grid.Row="1" Margin="5"/>
 			<DataGrid ItemsSource="{Binding LogEntries}"
                       ColumnHeaderHeight="30"
                       AutoGenerateColumns="False"
@@ -89,7 +83,6 @@
 					</DataGridTextColumn>
 				</DataGrid.Columns>
 			</DataGrid>
-=======
 		<StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
 			<TextBox Margin="5" VerticalAlignment="Bottom" Watermark="Поиск"></TextBox>
 		</StackPanel>
@@ -116,7 +109,6 @@
 		
 		<Border Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="1" Margin="5">
 			
->>>>>>> 0f1a112b3f96582bc28ba8a00c2206cf891c24b1
 		</Border>
 	</Grid>
 </UserControl>
