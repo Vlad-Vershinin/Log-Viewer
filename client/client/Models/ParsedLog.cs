@@ -1,4 +1,6 @@
 using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 public class ParsedLog
@@ -10,8 +12,8 @@ public class ParsedLog
     }
 
     [Required]
-    public string Filename { get; }
-    public string RawJSON { get; }
+    public string Filename { get; } = string.Empty;
+    public string RawJSON { get; } = string.Empty;
     [Required]
     public DateTime Timestamp { get; set; }
     [Required]
@@ -20,7 +22,7 @@ public class ParsedLog
     public JObject OtherKeys { get { return other_keys; } set { this.other_keys = value; } } // это в бд не суём
     public bool IsHidden { get; set; } = false;
     public bool IsAnomaly { get; set; } = false;
-    public List<ParsedLog> GroupedLogs { get; set; } // логи из этого листа распоковываем как отдельные записи в бд
+    public List<ParsedLog>? GroupedLogs { get; set; } // логи из этого листа распоковываем как отдельные записи в бд
 
     private JObject other_keys;
 }

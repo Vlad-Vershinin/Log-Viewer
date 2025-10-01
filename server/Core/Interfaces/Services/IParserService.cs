@@ -1,6 +1,6 @@
 ﻿using server.Core.Entities;
 
-namespace server.Core.Interfaces;
+namespace server.Core.Interfaces.Services;
 
 public interface IParserService
 {

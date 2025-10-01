@@ -5,6 +5,8 @@ namespace server.Core.Entities;
 
 public class ParsedLog
 {
+    public ParsedLog() { }
+
     public ParsedLog(string filename, string rawJSON)
     {
         Filename = filename;
@@ -12,8 +14,8 @@ public class ParsedLog
     }
 
     [Required]
-    public string Filename { get; }
-    public string RawJSON { get; }
+    public string Filename { get; set; }
+    public string RawJSON { get; set; }
     [Required]
     public DateTime Timestamp { get; set; }
     [Required]
