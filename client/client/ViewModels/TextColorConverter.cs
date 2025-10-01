@@ -1,4 +1,5 @@
-﻿using Avalonia.Markup;
+﻿using Avalonia.Data.Converters;
+using Avalonia.Markup;
 using Avalonia.Media;
 using client.services.interfaces;
 using System;

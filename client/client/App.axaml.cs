@@ -6,12 +6,14 @@ using client.ViewModels;
 using client.Views;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 
 namespace client
 {
     public partial class App : Application
     {
-        public static IServiceProvider ServiceProvider { get; internal set; }
+        public IServiceProvider ServiceProvider { get; private set; }
 
         public override void Initialize()
         {
@@ -34,7 +36,7 @@ namespace client
                 MainWindowViewModel mainViewModel = ServiceProvider.GetRequiredService<MainWindowViewModel>();
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel()
+                    DataContext = mainViewModel
                 };
             }
 
