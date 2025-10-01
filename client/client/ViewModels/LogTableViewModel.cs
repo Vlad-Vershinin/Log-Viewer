@@ -16,7 +16,6 @@ namespace client.ViewModels
 
         public LogTableViewModel()
         {
-            Parser
             CreateBoardCommand = ReactiveCommand.Create(SwitchToDiagramPage);
         }
 

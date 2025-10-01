@@ -11,8 +11,8 @@
 	
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="0.1*"></RowDefinition>
 			<RowDefinition></RowDefinition>
+			<RowDefinition Height="80"></RowDefinition>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="0.25*"></ColumnDefinition>
@@ -20,33 +20,35 @@
 
 		</Grid.ColumnDefinitions>
 
-		<StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
-			<TextBox Margin="5" VerticalAlignment="Bottom" Watermark="Поиск"></TextBox>
-		</StackPanel>
-		<ScrollContentPresenter Background="#000a2c" Grid.Row="1" Margin="5"></ScrollContentPresenter>
-		
-		
-		
-		<Button Background="DarkOrange" VerticalAlignment="Bottom" Margin="5" Content="Фильтры" Grid.Column="1"></Button>
-		
-		
-		
-		
-		<StackPanel HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Bottom" Orientation="Horizontal">
-			<Button Margin="0,5,0,5" Content="--|"></Button>
-			<Button Margin="0,5,5,5" Content="-|"></Button>
-			<TextBox Margin="0,5,0,5" VerticalContentAlignment="Center" VerticalAlignment="Center"></TextBox>
-			<Button Margin="5,5,0,5" Content="|-"></Button>
-			<Button Margin="0,5,0,5" Content="|--"></Button>
-			<Button Content="Обновить"  Background="Green" Margin="5" Command="{Binding CreateBoardCommand}"></Button>
 
-		</StackPanel>
+		<DockPanel>
+			<StackPanel DockPanel.Dock="Top" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+				<TextBox Margin="5" VerticalAlignment="Bottom" Watermark="Поиск"></TextBox>
+			</StackPanel>
+			<ScrollContentPresenter Background="#000a2c" Grid.Row="0" Margin="5"></ScrollContentPresenter>
 
-		<TreeDataGrid></TreeDataGrid>
-		
-		<Border Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="1" Margin="5">
+		</DockPanel>
+		<ScrollContentPresenter Background="#000a2c" Margin="5,0,5,5" Grid.Row="1" Grid.ColumnSpan="2"></ScrollContentPresenter>
+
+
+
+		<DockPanel Grid.Row="0" Grid.Column="1">
+			<DockPanel DockPanel.Dock="Top">
+				<Button DockPanel.Dock="Left" Background="DarkOrange" VerticalAlignment="Bottom" Margin="0,5,5,5" Content="Фильтры" Grid.Column="1"></Button>
+				<StackPanel DockPanel.Dock="Right" HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Bottom" Orientation="Horizontal">
+					<Button Margin="0,5,0,5" Content="--|"></Button>
+					<Button Margin="0,5,5,5" Content="-|"></Button>
+					<TextBox Margin="0,5,0,5" VerticalContentAlignment="Center" VerticalAlignment="Center"></TextBox>
+					<Button Margin="5,5,0,5" Content="|-"></Button>
+					<Button Margin="0,5,0,5" Content="|--"></Button>
+					<Button Content="Обновить"  Background="Green" Margin="5" Command="{Binding CreateBoardCommand}"></Button>
+				</StackPanel>
+			</DockPanel>
+			<Border Background="#000a2c" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="1" Margin="0,5,5,5">
+				<TreeDataGrid Background="#000a2c"></TreeDataGrid>
 			
-		</Border>
+			</Border>
+		</DockPanel>
 		
 		
 		
