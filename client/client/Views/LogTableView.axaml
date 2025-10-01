@@ -7,11 +7,16 @@
              x:Class="client.Views.LogTableView"
              x:DataType="vm:LogTableViewModel">
 
+<<<<<<< HEAD
 	<UserControl.Resources>
 		<TextColorConverter x:Key="TextColorConverter"/>
 	</UserControl.Resources>
 
 
+=======
+	
+	
+>>>>>>> 0f1a112b3f96582bc28ba8a00c2206cf891c24b1
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="0.1*"/>
@@ -22,6 +27,7 @@
 			<ColumnDefinition/>
 		</Grid.ColumnDefinitions>
 
+<<<<<<< HEAD
 		<Button Content="Диаграммы" Margin="5" Command="{Binding CreateBoardCommand}"/>
 
 		<StackPanel HorizontalAlignment="Right" Grid.Column="1" Orientation="Horizontal">
@@ -83,6 +89,34 @@
 					</DataGridTextColumn>
 				</DataGrid.Columns>
 			</DataGrid>
+=======
+		<StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+			<TextBox Margin="5" VerticalAlignment="Bottom" Watermark="Поиск"></TextBox>
+		</StackPanel>
+		<ScrollContentPresenter Background="#000a2c" Grid.Row="1" Margin="5"></ScrollContentPresenter>
+		
+		
+		
+		<Button Background="DarkOrange" VerticalAlignment="Bottom" Margin="5" Content="Фильтры" Grid.Column="1"></Button>
+		
+		
+		
+		
+		<StackPanel HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Bottom" Orientation="Horizontal">
+			<Button Margin="0,5,0,5" Content="--|"></Button>
+			<Button Margin="0,5,5,5" Content="-|"></Button>
+			<TextBox Margin="0,5,0,5" VerticalContentAlignment="Center" VerticalAlignment="Center"></TextBox>
+			<Button Margin="5,5,0,5" Content="|-"></Button>
+			<Button Margin="0,5,0,5" Content="|--"></Button>
+			<Button Content="Обновить"  Background="Green" Margin="5" Command="{Binding CreateBoardCommand}"></Button>
+
+		</StackPanel>
+
+		<TreeDataGrid></TreeDataGrid>
+		
+		<Border Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="1" Margin="5">
+			
+>>>>>>> 0f1a112b3f96582bc28ba8a00c2206cf891c24b1
 		</Border>
 	</Grid>
 </UserControl>

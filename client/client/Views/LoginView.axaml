@@ -32,7 +32,7 @@
 				</Grid.RowDefinitions>
 				<StackPanel Grid.Column="1" Grid.Row="0" Margin="5">
 					<TextBlock Text="Имя сессии:" HorizontalAlignment="Center" VerticalAlignment="Bottom"></TextBlock>
-					<TextBox HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"></TextBox>
+					<TextBox HorizontalAlignment="Center" MinWidth="200" HorizontalContentAlignment="Left"></TextBox>
 				</StackPanel>
 				<Button Command="{Binding CommandToLogIn}"  Grid.Column="1" Grid.Row="1" Content="Войти" Padding="40, 15, 40, 15" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="5"></Button>
 				

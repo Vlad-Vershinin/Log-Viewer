@@ -9,7 +9,6 @@ using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace client.ViewModels
 {
     
@@ -18,6 +17,7 @@ namespace client.ViewModels
     {
         public ReactiveCommand<Unit, Unit> CreateBoardCommand { get; set; }
 
+<<<<<<< HEAD
         private readonly ObservableCollection<LogEntry> _logEntries;
 
         private readonly INavigationService _navigationService;
@@ -29,6 +29,12 @@ namespace client.ViewModels
             InitializeSampleData();
 
             _navigationService = navigationService;
+=======
+        public LogTableViewModel()
+        {
+            Parser
+            CreateBoardCommand = ReactiveCommand.Create(SwitchToDiagramPage);
+>>>>>>> 0f1a112b3f96582bc28ba8a00c2206cf891c24b1
         }
 
         public ObservableCollection<LogEntry> LogEntries => _logEntries;
