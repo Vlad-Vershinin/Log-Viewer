@@ -7,10 +7,11 @@ public class ParsedLog
 {
     public ParsedLog() { }
 
-    public ParsedLog(string filename, string rawJSON)
+    public ParsedLog(string filename, string rawJSON, string sessionName)
     {
         Filename = filename;
         RawJSON = rawJSON;
+        SessionName = sessionName;
     }
 
     [Required]

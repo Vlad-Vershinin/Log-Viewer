@@ -5,11 +5,11 @@ using server.Infrastructure.Data;
 
 namespace server.Infrastructure.Repositories;
 
-public class SessionRepositry : ISessionRepositry
+public class SessionRepository : ISessionRepository
 {
     private readonly ApplicationDbContext _context;
 
-    public SessionRepositry(ApplicationDbContext context)
+    public SessionRepository(ApplicationDbContext context)
     {
         _context = context;
     }

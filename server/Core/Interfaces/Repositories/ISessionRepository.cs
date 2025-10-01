@@ -2,7 +2,7 @@
 
 namespace server.Core.Interfaces.Repositories;
 
-public interface ISessionRepositry
+public interface ISessionRepository
 {
     Task CreateSessionAsync(Session session);
     Task GetSessionAsync(Session session);
