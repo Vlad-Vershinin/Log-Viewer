@@ -8,6 +8,8 @@ public class ParsedLogConfiguration : IEntityTypeConfiguration<ParsedLog>
 {
     public void Configure(EntityTypeBuilder<ParsedLog> builder)
     {
+        builder.HasKey(pl => new { pl.Filename, pl.Timestamp });
+
         builder
             .HasOne(us => us.Session)
             .WithMany(ps => ps.ParsedLogs)

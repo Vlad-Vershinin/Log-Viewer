@@ -14,15 +14,19 @@ public class ParsedLog
     [Required]
     public string Filename { get; }
     public string RawJSON { get; }
+    [Required]
     public DateTime Timestamp { get; set; }
     [Required]
-    public string Level { get; set; } = string.Empty; // ['info', 'debug', 'trace', 'warn', 'error']
+    public string Level { get; set; } = string.Empty; // ['info', 'debug', 'trace', 'warn', 'error', '@level missed']
     public string Message { get; set; } = string.Empty;
-    public List<JToken>? OtherKeys { get; set; }
+    public string OtherKeysJSON { get { return other_keys.ToString(); } set { this.other_keys = JObject.Parse(value); } } // это в бд суём, это строка в JSON нотации
+    public JObject OtherKeys { get { return other_keys; } set { this.other_keys = value; } } // это в бд не суём
     public bool IsHidden { get; set; } = false;
     public bool IsAnomaly { get; set; } = false;
-    public string SessionName { get; set; } = string.Empty;
+    public List<ParsedLog> GroupedLogs { get; set; } // логи из этого листа распоковываем как отдельные записи в бд
 
-    // for db navigation
-    public Session? Session { get; set; }
+    public string SessionName { get; set; } = string.Empty; // хранит имя сессии Session
+    public Session? Session { get; set; } // for db navigation
+
+    private JObject other_keys;
 }
