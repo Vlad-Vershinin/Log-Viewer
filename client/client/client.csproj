@@ -24,4 +24,8 @@
     <PackageReference Include="Avalonia.ReactiveUI" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
 </Project>

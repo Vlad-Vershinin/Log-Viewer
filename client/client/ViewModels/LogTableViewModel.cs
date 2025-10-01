@@ -6,7 +6,6 @@ using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace client.ViewModels
 {
     
@@ -15,10 +14,9 @@ namespace client.ViewModels
     {
         public ReactiveCommand<Unit, Unit> CreateBoardCommand { get; set; }
 
-
         public LogTableViewModel()
         {
-            
+            Parser
             CreateBoardCommand = ReactiveCommand.Create(SwitchToDiagramPage);
         }
 
