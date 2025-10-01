@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" />
     <PackageReference Include="Avalonia.Themes.Fluent" />
     <PackageReference Include="Avalonia.Fonts.Inter" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
@@ -29,6 +30,7 @@
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Avalonia.ReactiveUI" />
+<<<<<<< HEAD
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
   </ItemGroup>
 
@@ -41,5 +43,8 @@
   <ItemGroup>
     <None Include="obj\Debug\net8.0\client.AssemblyInfoInputs.cache" />
     <None Include="obj\Debug\net8.0\client.GeneratedMSBuildEditorConfig.editorconfig" />
+=======
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" />
+>>>>>>> 10e38ddf71d7bf40e4f748fe36bf9a22a8e49ae2
   </ItemGroup>
 </Project>
