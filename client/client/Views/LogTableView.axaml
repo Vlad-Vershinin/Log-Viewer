@@ -1,0 +1,57 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:client.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="client.Views.LogTableView"
+             x:DataType="vm:LogTableViewModel">
+
+	
+	
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="0.1*"></RowDefinition>
+			<RowDefinition></RowDefinition>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="0.25*"></ColumnDefinition>
+			<ColumnDefinition></ColumnDefinition>
+
+		</Grid.ColumnDefinitions>
+
+		<StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+			<TextBox Margin="5" VerticalAlignment="Bottom" Watermark="Поиск"></TextBox>
+		</StackPanel>
+		<ScrollContentPresenter Background="#000a2c" Grid.Row="1" Margin="5"></ScrollContentPresenter>
+		
+		
+		
+		<Button Background="DarkOrange" VerticalAlignment="Bottom" Margin="5" Content="Фильтры" Grid.Column="1"></Button>
+		
+		
+		
+		
+		<StackPanel HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Bottom" Orientation="Horizontal">
+			<Button Margin="0,5,0,5" Content="--|"></Button>
+			<Button Margin="0,5,5,5" Content="-|"></Button>
+			<TextBox Margin="0,5,0,5" VerticalContentAlignment="Center" VerticalAlignment="Center"></TextBox>
+			<Button Margin="5,5,0,5" Content="|-"></Button>
+			<Button Margin="0,5,0,5" Content="|--"></Button>
+			<Button Content="Обновить"  Background="Green" Margin="5" Command="{Binding CreateBoardCommand}"></Button>
+
+		</StackPanel>
+
+		<TreeDataGrid></TreeDataGrid>
+		
+		<Border Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="1" Margin="5">
+			
+		</Border>
+		
+		
+		
+		
+		
+		
+	</Grid>
+</UserControl>
