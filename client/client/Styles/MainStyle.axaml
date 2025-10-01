@@ -10,8 +10,8 @@
 		<Setter Property="Background">
 			<Setter.Value>
 				<LinearGradientBrush>
-					<GradientStop Color="#050013"></GradientStop>
-					<GradientStop Color="#030027"></GradientStop>
+					<GradientStop Color="#1a153c"></GradientStop>
+					<GradientStop Color="#131436"></GradientStop>
 				</LinearGradientBrush>
 			</Setter.Value>
 		</Setter>
@@ -23,7 +23,17 @@
 	<Style Selector="TextBox">
 		<Setter Property="BorderBrush" Value="#002d8e"></Setter>
 	</Style>
-    
 
+	<Style Selector="Border">
+		<Setter Property="Background" Value="#1e2b55"></Setter>
+	</Style>
+
+	<Style Selector="ListBox">
+		<Setter Property="Background" Value="#1e2b55"></Setter>
+	</Style>
+	
+	<Style Selector="ScrollViewer">
+		<Setter Property="Background" Value="#1e2b55"></Setter>
+	</Style>
 	
 </Styles>
