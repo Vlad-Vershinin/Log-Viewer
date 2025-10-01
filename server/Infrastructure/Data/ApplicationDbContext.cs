@@ -13,7 +13,7 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfiguration(new UserSessionConfiguration());
+        modelBuilder.ApplyConfiguration(new SessionConfiguration());
         modelBuilder.ApplyConfiguration(new ParsedLogConfiguration());
 
         base.OnModelCreating(modelBuilder);

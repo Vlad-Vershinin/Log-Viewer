@@ -27,11 +27,6 @@ public class SessionRepositry : ISessionRepositry
         await _context.SaveChangesAsync();
     }
 
-    public async Task GetSessionAsync(Session session)
-    {
-        return;
-    }
-
     public async Task<List<ParsedLog>> LoadSessionAsync(Session session)
     {
         var res = await _context.UserSessions

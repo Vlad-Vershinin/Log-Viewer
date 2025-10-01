@@ -23,7 +23,7 @@ public class SessionController : ControllerBase
             return BadRequest("Session name is empty");
         }
 
-        await _sessionService.CreateSession(new UserSession { UserSessionName = session });
+        await _sessionService.CreateSession(new Session { SessionName = session });
 
         return Ok();
     }
@@ -36,7 +36,7 @@ public class SessionController : ControllerBase
             return BadRequest("Session name is empty");
         }
 
-        await _sessionService.DeleteSession(new UserSession { UserSessionName = session });
+        await _sessionService.DeleteSession(new Session { SessionName = session });
         return Ok();
     }
 }

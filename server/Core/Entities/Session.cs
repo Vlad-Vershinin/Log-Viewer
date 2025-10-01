@@ -4,6 +4,7 @@ namespace server.Core.Entities;
 
 public class Session
 {
+    [Key]
     [Required]
     public string SessionName { get; set; } = string.Empty;
 
