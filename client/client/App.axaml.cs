@@ -28,6 +28,8 @@ namespace client
             services.AddTransient<MainWindowViewModel>();
             services.AddTransient<LogTableViewModel>();
 
+            services.AddSingleton<ISessionService>(SessionService.Instance);
+
 
             ServiceProvider = services.BuildServiceProvider();
 

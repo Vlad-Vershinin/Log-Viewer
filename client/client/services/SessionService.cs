@@ -1,4 +1,5 @@
-﻿using client.ViewModels;
+﻿using client.services.interfaces;
+using client.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace client.services
 {
-    public class SessionService : ReactiveObject
+    public class SessionService : ReactiveObject, ISessionService
     {
-        private static readonly Lazy<SessionService> _instance =
-            new Lazy<SessionService>(() => new SessionService());
+        private static readonly SessionService _instance = new SessionService();
+        public static SessionService Instance => _instance;
 
-        public static SessionService Instance => _instance.Value;
+        public SessionService Instance => _instance.Value;
 
         private string _sessionName;
         public string SessionName
