@@ -18,6 +18,7 @@ namespace client.ViewModels
 
         public LogTableViewModel()
         {
+            
             CreateBoardCommand = ReactiveCommand.Create(SwitchToDiagramPage);
         }
 

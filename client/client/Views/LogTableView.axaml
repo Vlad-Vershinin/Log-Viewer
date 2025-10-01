@@ -29,10 +29,10 @@
 			<Button Margin="0,5,0,5" Content="|--"></Button>
 			<Button Content="Обновить"  Background="Green" Margin="5" Command="{Binding CreateBoardCommand}"></Button>
 		</StackPanel>
-		
 
+		
 		<Border Grid.ColumnSpan="3" Grid.Row="1" Margin="5">
-			<DataGrid ColumnHeaderHeight="30" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CanUserResizeColumns="True" IsEnabled="True">
+			<DataGrid Name="LogGridGUI" ColumnHeaderHeight="30" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CanUserResizeColumns="True" IsEnabled="True">
 				<DataGrid.Columns>
 					<DataGridCheckBoxColumn Header="Скрыть" Width="0.15*"/>
 					<DataGridTextColumn Header="Время" Width="0.4*"/>
