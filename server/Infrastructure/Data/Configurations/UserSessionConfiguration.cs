@@ -8,7 +8,7 @@ public class UserSessionConfiguration : IEntityTypeConfiguration<UserSession>
 {
     public void Configure(EntityTypeBuilder<UserSession> builder)
     {
-        builder.HasKey(us => us.Id);
+        builder.HasKey(us => us.UserSessionName);
 
         builder
             .HasMany(pl => pl.ParsedLogs)

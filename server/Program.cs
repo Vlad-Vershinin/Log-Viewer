@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using server.Infrastructure.Data;
+
 namespace server;
 
 public class Program
@@ -6,6 +9,8 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlite("Data Source=logdb.db"));
         builder.Services.AddControllers();
 
         builder.Services.AddCors(options =>

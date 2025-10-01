@@ -8,10 +8,12 @@ public class ParsedLogConfiguration : IEntityTypeConfiguration<ParsedLog>
 {
     public void Configure(EntityTypeBuilder<ParsedLog> builder)
     {
+        builder.HasKey(pl => new { pl.Filename, pl.Timestamp });
+
         builder
             .HasOne(us => us.UserSession)
             .WithMany(ps => ps.ParsedLogs)
-            .HasForeignKey(pl => pl.SessionId)
+            .HasForeignKey(pl => pl.SessionName)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

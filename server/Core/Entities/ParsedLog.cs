@@ -5,15 +5,18 @@ namespace server.Core.Entities;
 
 public class ParsedLog
 {
-    public ParsedLog(string filename, string rawJSON)
+    public ParsedLog() { }
+
+    public ParsedLog(string filename, string rawJSON, string session)
     {
         Filename = filename;
         RawJSON = rawJSON;
+        SessionName = session;
     }
 
     [Required]
-    public string Filename { get; }
-    public string RawJSON { get; }
+    public string Filename { get; set; } = string.Empty;
+    public string RawJSON { get; set; } = string.Empty;
     public DateTime Timestamp { get; set; }
     [Required]
     public string Level { get; set; } = string.Empty; // ['info', 'debug', 'trace', 'warn', 'error']
@@ -21,7 +24,7 @@ public class ParsedLog
     public List<JToken>? OtherKeys { get; set; }
     public bool IsHidden { get; set; } = false;
     public bool IsAnomaly { get; set; } = false;
-    public Guid SessionId { get; set; }
+    public string SessionName { get; set; } = string.Empty;
 
     // for db navigation
     public UserSession? UserSession { get; set; }
