@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using client.ViewModels;
+using ReactiveUI;
 using System;
 
 namespace client.Views;
@@ -15,12 +16,8 @@ public partial class LogTableView : UserControl
 		
         //LogGridGUI.ItemsSource = 
     }
-<<<<<<< HEAD
 
-    private void InitializeComponent()
-    {
-        throw new NotImplementedException();
-    }
+    
 }
 =======
 }
@@ -43,4 +40,3 @@ public partial class LogTableView : UserControl
 				</DataGrid.Columns>
 			</DataGrid>
 */
->>>>>>> 0f1a112b3f96582bc28ba8a00c2206cf891c24b1

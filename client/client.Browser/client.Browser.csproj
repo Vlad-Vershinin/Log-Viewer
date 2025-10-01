@@ -11,6 +11,7 @@
     <PackageReference Include="Avalonia.Controls.DataGrid" />
     <PackageReference Include="Avalonia.Controls.TreeDataGrid" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" />
+    <PackageReference Include="ReactiveUI.Fody" />
   </ItemGroup>
 
   <ItemGroup>

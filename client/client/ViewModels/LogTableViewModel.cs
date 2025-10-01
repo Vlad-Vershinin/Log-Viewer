@@ -1,6 +1,7 @@
-﻿using client.services;
-using client.services.interfaces;
+﻿using Avalonia.Controls;
+using Avalonia.Controls.Models.TreeDataGrid;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,6 +17,16 @@ namespace client.ViewModels
     public class LogTableViewModel : ViewModelBase
     {
         public ReactiveCommand<Unit, Unit> CreateBoardCommand { get; set; }
+        public ReactiveCommand<Unit, Unit> OpenOptionPane { get; set; }
+
+
+        [Reactive]
+        public bool IsOptionPaneIsOpen { get; set; } = false;
+
+
+        private ObservableCollection<ParsedLog> _parsedLogs;
+        public HierarchicalTreeDataGridSource<ParsedLog> LogsSource { get; }
+
 
 <<<<<<< HEAD
         private readonly ObservableCollection<LogEntry> _logEntries;
@@ -32,13 +43,37 @@ namespace client.ViewModels
 =======
         public LogTableViewModel()
         {
-            Parser
             CreateBoardCommand = ReactiveCommand.Create(SwitchToDiagramPage);
->>>>>>> 0f1a112b3f96582bc28ba8a00c2206cf891c24b1
+            OpenOptionPane = ReactiveCommand.CreateFromTask(OpenPane);
+
+            LogsSource = new HierarchicalTreeDataGridSource<ParsedLog>(_parsedLogs)
+            {
+                Columns =
+                {
+                    new CheckBoxColumn<ParsedLog>("Скрыть", x=>x.IsHidden),
+                    new HierarchicalExpanderColumn<ParsedLog>(
+                        new TextColumn<ParsedLog, string>("Сообщение", x => x.Message), x=>x.GroupedLogs),
+
+                },
+            };
+                
         }
 
+        /*
+ <DataGridCheckBoxColumn Header="Скрыть" Binding="{Binding IsHidden}" Width="0.15*"/>
+					<DataGridTextColumn Header="Время" Binding="{Binding Timestamp}" Width="0.4*"/>
+					<DataGridTextColumn Header="Вид лога" Binding="{Binding Level}" Width="0.2*"/>
+					<DataGridTemplateColumn Header="Содержание" Binding="{Binding Message}" Width="0.5*"/>
+ */
         public ObservableCollection<LogEntry> LogEntries => _logEntries;
 
+        private async Task OpenPane()
+        {
+            IsOptionPaneIsOpen = true;
+        }
+        private void SwitchToDiagramPage()
+        {
+            // Blank
         public ObservableCollection<LogEntry> LogEntries1 => _logEntries;
 
         private void InitializeSampleData()
