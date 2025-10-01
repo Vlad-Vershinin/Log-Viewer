@@ -11,7 +11,7 @@ public class LogController : ControllerBase
     {
         using var reader = new StreamReader(Request.Body);
         var body = await reader.ReadToEndAsync();
-
+        
         if (string.IsNullOrEmpty(body))
             return BadRequest("File is empty");
         else
