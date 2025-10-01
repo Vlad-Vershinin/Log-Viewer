@@ -5,11 +5,11 @@ using server.Infrastructure.Data;
 
 namespace server.Infrastructure.Repositories;
 
-public class SessionRepositry : ISessionRepositry
+public class SessionRepository : ISessionRepository
 {
     private readonly ApplicationDbContext _context;
 
-    public SessionRepositry(ApplicationDbContext context)
+    public SessionRepository(ApplicationDbContext context)
     {
         _context = context;
     }
@@ -27,13 +27,8 @@ public class SessionRepositry : ISessionRepositry
         await _context.SaveChangesAsync();
     }
 
-    public async Task<List<ParsedLog>> LoadSessionAsync(Session session)
+    public async Task GetSessionAsync(Session session)
     {
-        var res = await _context.UserSessions
-            .Where(s => s.SessionName == session.SessionName)
-            .Include(s => s.ParsedLogs)
-            .FirstOrDefaultAsync();
-
-        return res?.ParsedLogs ?? new List<ParsedLog>();
+        return;
     }
 }

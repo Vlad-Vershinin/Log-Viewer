@@ -8,10 +8,11 @@ public class ParsedLog
 {
     public ParsedLog() { }
 
-    public ParsedLog(string filename, string rawJSON)
+    public ParsedLog(string filename, string rawJSON, string sessionName)
     {
         Filename = filename;
         RawJSON = rawJSON;
+        SessionName = sessionName;
     }
 
     [Required]
@@ -37,7 +38,7 @@ public class ParsedLog
     } // это в бд не суём
     public bool IsHidden { get; set; } = false;
     public bool IsAnomaly { get; set; } = false;
-    public List<ParsedLog>? GroupedLogs { get; set; } // логи из этого листа распоковываем как отдельные записи в бд
+    public List<ParsedLog> GroupedLogs { get; set; } // логи из этого листа распаковываем как отдельные записи в бд
 
     public string SessionName { get; set; } = string.Empty; // хранит имя сессии Session
     public Session? Session { get; set; } // for db navigation

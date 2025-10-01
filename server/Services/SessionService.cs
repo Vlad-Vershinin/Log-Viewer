@@ -6,9 +6,9 @@ namespace server.Services;
 
 public class SessionService : ISessionService
 {
-    private readonly ISessionRepositry _sessionRepositry;
+    private readonly ISessionRepository _sessionRepositry;
 
-    public SessionService(ISessionRepositry sessionRepositry)
+    public SessionService(ISessionRepository sessionRepositry)
     {
         _sessionRepositry = sessionRepositry;
     }
