@@ -23,7 +23,7 @@ public class ParsedLog
     public JObject OtherKeys { get { return other_keys; } set { this.other_keys = value; } } // это в бд не суём
     public bool IsHidden { get; set; } = false;
     public bool IsAnomaly { get; set; } = false;
-    public List<ParsedLog> GroupedLogs { get; set; } // логи из этого листа распоковываем как отдельные записи в бд
+    public List<ParsedLog> GroupedLogs { get; set; } // логи из этого листа распаковываем как отдельные записи в бд
 
     public string SessionName { get; set; } = string.Empty; // хранит имя сессии Session
     public Session? Session { get; set; } // for db navigation
