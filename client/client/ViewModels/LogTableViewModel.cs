@@ -1,4 +1,6 @@
-﻿using ReactiveUI;
+﻿using client.services;
+using client.services.interfaces;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,11 +20,15 @@ namespace client.ViewModels
 
         private readonly ObservableCollection<LogEntry> _logEntries;
 
-        public LogTableViewModel()
+        private readonly INavigationService _navigationService;
+
+        public LogTableViewModel(INavigationService navigationService)
         {
             _logEntries = new ObservableCollection<LogEntry>();
 
             InitializeSampleData();
+
+            _navigationService = navigationService;
         }
 
         public ObservableCollection<LogEntry> LogEntries => _logEntries;

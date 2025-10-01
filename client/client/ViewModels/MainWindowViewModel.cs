@@ -12,10 +12,6 @@ namespace client.ViewModels
     {
         private readonly INavigationService _navigationService;
 
-        public MainWindowViewModel()
-        {
-        }
-
         public MainWindowViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;

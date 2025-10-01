@@ -1,4 +1,5 @@
-﻿using System;
+﻿using client.services.interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,11 @@ namespace client.ViewModels
 {
     public class DiagramViewModel : ViewModelBase
     {
+        private readonly INavigationService _navigationService;
+
+        public DiagramViewModel(INavigationService navigationService)
+        {
+            _navigationService = navigationService;
+        }
     }
 }
