@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace client.ViewModels
 {
-    public class LogEntry : ReactiveObject
+    public class LogEntry : ReactiveUI.ReactiveObject
     {
         private bool _isHidden;
         public bool IsHidden

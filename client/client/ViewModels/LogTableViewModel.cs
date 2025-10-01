@@ -1,6 +1,7 @@
 ﻿using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
 using System.Text;
@@ -15,18 +16,18 @@ namespace client.ViewModels
     {
         public ReactiveCommand<Unit, Unit> CreateBoardCommand { get; set; }
 
-        private readonly ReactiveList<LogEntry> _logEntries;
+        private readonly ObservableCollection<LogEntry> _logEntries;
 
         public LogTableViewModel()
         {
-            _logEntries = new ReactiveList<LogEntry>();
+            _logEntries = new ObservableCollection<LogEntry>();
 
             InitializeSampleData();
         }
 
-        public IReactiveList<LogEntry> LogEntries => _logEntries;
+        public ObservableCollection<LogEntry> LogEntries => _logEntries;
 
-        public ReactiveList<LogEntry> LogEntries1 => _logEntries;
+        public ObservableCollection<LogEntry> LogEntries1 => _logEntries;
 
         private void InitializeSampleData()
         {
@@ -39,7 +40,10 @@ namespace client.ViewModels
             new() { Time = DateTime.Now, Type = "trace", Content = "Trace details" }
         };
 
-            _logEntries.AddRange(logs);
+            foreach (var log in logs)
+            {
+                _logEntries.Add(log);
+            }
         }
 
     }

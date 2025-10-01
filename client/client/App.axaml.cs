@@ -5,12 +5,13 @@ using client.services.interfaces;
 using client.ViewModels;
 using client.Views;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace client
 {
     public partial class App : Application
     {
-        public static object ServiceProvider { get; internal set; }
+        public static IServiceProvider ServiceProvider { get; internal set; }
 
         public override void Initialize()
         {
@@ -19,7 +20,7 @@ namespace client
 
         public override void OnFrameworkInitializationCompleted()
         {
-            var service = new ServiceCollection();
+            var services = new ServiceCollection();
             services.AddSingleton<INavigationService, NavigationService>();
 
             services.AddTransient<MainWindowViewModel>();

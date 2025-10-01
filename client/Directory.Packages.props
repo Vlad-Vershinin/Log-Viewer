@@ -7,8 +7,6 @@
     <!-- Avalonia packages -->
     <!-- Important: keep version in sync! -->
     <PackageVersion Include="Avalonia" Version="11.3.6" />
-<<<<<<< HEAD
-=======
     <PackageVersion Include="Avalonia.Controls.DataGrid" Version="11.3.6" />
 >>>>>>> 10e38ddf71d7bf40e4f748fe36bf9a22a8e49ae2
     <PackageVersion Include="Avalonia.Themes.Fluent" Version="11.3.6" />
@@ -19,11 +17,9 @@
     <PackageVersion Include="Avalonia.Browser" Version="11.3.6" />
     <PackageVersion Include="Avalonia.Android" Version="11.3.6" />
     <PackageVersion Include="Avalonia.ReactiveUI" Version="11.3.6" />
-<<<<<<< HEAD
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.9" />
-=======
     <PackageVersion Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.0.0-beta.700" />
->>>>>>> 10e38ddf71d7bf40e4f748fe36bf9a22a8e49ae2
+
     <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.0.1.15" />
   </ItemGroup>
 </Project>
