@@ -4,14 +4,14 @@ using server.Core.Entities;
 
 namespace server.Infrastructure.Data.Configurations;
 
-public class UserSessionConfiguration : IEntityTypeConfiguration<UserSession>
+public class UserSessionConfiguration : IEntityTypeConfiguration<Session>
 {
-    public void Configure(EntityTypeBuilder<UserSession> builder)
+    public void Configure(EntityTypeBuilder<Session> builder)
     {
-        builder.HasKey(us => us.Id);
+        builder.HasKey(us => us.SessionName);
 
         builder
             .HasMany(pl => pl.ParsedLogs)
-            .WithOne(us => us.UserSession);
+            .WithOne(us => us.Session);
     }
 }

@@ -21,8 +21,8 @@ public class ParsedLog
     public List<JToken>? OtherKeys { get; set; }
     public bool IsHidden { get; set; } = false;
     public bool IsAnomaly { get; set; } = false;
-    public Guid SessionId { get; set; }
+    public string SessionName { get; set; } = string.Empty;
 
     // for db navigation
-    public UserSession? UserSession { get; set; }
+    public Session? Session { get; set; }
 }
