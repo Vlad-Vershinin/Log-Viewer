@@ -9,5 +9,5 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="client">
 	
-        <views:LogTableView />
+        <views:DragNDropView />
 </Window>
