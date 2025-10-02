@@ -18,5 +18,6 @@ namespace client.ViewModels
     public class DiagramViewModel : ViewModelBase
     {
         public TestChartViewModel TestChart { get; set; } = new TestChartViewModel();
+        public GanttDiagramViewModel GanttChart { get; set; } = new GanttDiagramViewModel();
     }
 }

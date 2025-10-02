@@ -32,10 +32,15 @@
 				</Grid.RowDefinitions>
 
 
-				<lvc:CartesianChart></lvc:CartesianChart>
 				
 
-				<lvc:CartesianChart Margin="5" Background="#000a2c" Grid.Row="0" Grid.Column="0" DataContext="{Binding TestChart}" Title="{Binding Title}" Series="{Binding Series}"></lvc:CartesianChart>
+				<lvc:CartesianChart Margin="5" Background="#000a2c" Grid.Row="0" Grid.Column="0"
+									DataContext="{Binding GanttChart}"
+									Series="{Binding GanttSeries}"
+									YAxes="{Binding YAxes}">
+
+					
+				</lvc:CartesianChart>
 
 
 
