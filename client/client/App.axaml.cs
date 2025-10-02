@@ -6,48 +6,53 @@ using client.ViewModels;
 using client.Views;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 
-namespace client
+namespace client;
+
+public partial class App : Application
 {
-    public partial class App : Application
+    private IServiceProvider? _serviceProvider;
+    public static IServiceProvider? ServiceProvider { get; private set; }
+
+    public override void Initialize()
     {
-        private IServiceProvider? _serviceProvider;
-        public static IServiceProvider? ServiceProvider { get; private set; }
+        AvaloniaXamlLoader.Load(this);
+    }
 
-        public override void Initialize()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
+    public override void OnFrameworkInitializationCompleted()
+    {
+        var services = new ServiceCollection();
 
-        public override void OnFrameworkInitializationCompleted()
-        {
-            var services = new ServiceCollection();
-            services.AddSingleton<INavigationService, NavigationService>();
+        // add services
+        services.AddSingleton<INavigationService, NavigationService>();
+        services.AddSingleton<HttpClientService>();
+        services.AddSingleton<SessionService>();
 
-            services.AddTransient<MainWindowViewModel>();
-            services.AddTransient<LogTableViewModel>();
-            services.AddTransient<DiagramViewModel>();
-            services.AddTransient<LoginViewModel>();
+        // add views
+        services.AddTransient<LoginView>();
+        services.AddTransient<LogTableView>();
+
+        // add view models
+        services.AddTransient<MainWindowViewModel>();
+        services.AddTransient<LogTableViewModel>();
+        services.AddTransient<DiagramViewModel>();
+        services.AddTransient<LoginViewModel>();
 
             services.AddSingleton<SessionService>();
 
-            _serviceProvider = services.BuildServiceProvider();
-            ServiceProvider = _serviceProvider;
+        _serviceProvider = services.BuildServiceProvider();
+        ServiceProvider = _serviceProvider;
 
-            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            MainWindowViewModel mainViewModel = ServiceProvider.GetRequiredService<MainWindowViewModel>();
+            desktop.MainWindow = new MainWindow
             {
-                MainWindowViewModel mainViewModel = ServiceProvider.GetRequiredService<MainWindowViewModel>();
-                desktop.MainWindow = new MainWindow
-                {
-                    DataContext = mainViewModel
-                };
-            }
-
-
-            base.OnFrameworkInitializationCompleted();
+                DataContext = mainViewModel
+            };
+            ServiceProvider.GetService<INavigationService>().NavigateTo<LoginView>();
         }
-
+        base.OnFrameworkInitializationCompleted();
     }
 }

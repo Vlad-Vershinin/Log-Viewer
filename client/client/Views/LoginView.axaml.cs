@@ -14,9 +14,4 @@ public partial class LoginView : UserControl
         InitializeComponent();
         DataContext = App.ServiceProvider.GetService<LoginViewModel>();
     }
-
-    private void InitializeComponent()
-    {
-        
-    }
 }

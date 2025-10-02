@@ -15,15 +15,15 @@ public class SessionController : ControllerBase
         _sessionService = sessionService;
     }
 
-    [HttpPost("connect")]
-    public async Task<IActionResult> CreateSession([FromBody] string session)
+    [HttpPost("connect/{SessionName}")]
+    public async Task<IActionResult> CreateSession(string SessionName)
     {
-        if (string.IsNullOrWhiteSpace(session))
+        if (string.IsNullOrWhiteSpace(SessionName))
         {
             return BadRequest("Session name is empty");
         }
 
-        await _sessionService.CreateSession(new Session { SessionName = session });
+        await _sessionService.CreateSession(new Session { SessionName = SessionName });
 
         return Ok();
     }

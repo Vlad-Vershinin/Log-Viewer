@@ -1,63 +1,56 @@
 ﻿using Avalonia.Controls;
 using client.services.interfaces;
-using client.ViewModels;
-using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace client.services
+namespace client.services;
+
+public class NavigationService : ReactiveObject, INavigationService
 {
-    public class NavigationService : ReactiveObject, INavigationService
+    private readonly IServiceProvider _serviceProvider;
+    private readonly Stack<UserControl> _navigationStack;
+
+    [Reactive] public UserControl CurrentUserControl { get; set; }
+
+    public NavigationService(IServiceProvider serviceProvider) 
     {
-        private readonly IServiceProvider _serviceProvider;
-        private readonly Stack<UserControl> _navigationStack;
+        _serviceProvider = serviceProvider;
+        _navigationStack = new Stack<UserControl>();
+    }
 
+    public bool CanGoBack => _navigationStack.Count > 0;
 
-        public NavigationService(IServiceProvider serviceProvider) 
+    public void GoBack()
+    {
+        if (!CanGoBack)
+            return;
+
+        CurrentUserControl = _navigationStack.Pop();
+        this.RaisePropertyChanged(nameof(CurrentUserControl));
+    }
+
+    public void NavigateTo<T>() where T : UserControl
+    {
+        NavigateTo(typeof(T));
+    }
+
+    public void NavigateTo(Type windowType)
+    {
+        if (!typeof(UserControl).IsAssignableFrom(windowType))
+            throw new ArgumentException("Type must be a UserControl");
+
+        if (CurrentUserControl != null)
         {
-            _serviceProvider = serviceProvider;
-            _navigationStack = new Stack<UserControl>();
+            _navigationStack.Push(CurrentUserControl);
         }
 
-        public bool CanGoBack => _navigationStack.Count > 0;
+        CurrentUserControl = (UserControl)_serviceProvider.GetService(windowType);
 
-        public UserControl CurrentUserControl { get; set; }
+        if (CurrentUserControl == null)
+            throw new InvalidOperationException($"UserControl {windowType.Name} is not registered");
 
-        public void GoBack()
-        {
-            if (!CanGoBack)
-                return;
-
-            CurrentUserControl = _navigationStack.Pop();
-            this.RaisePropertyChanged(nameof(CurrentUserControl));
-        }
-
-        public void NavigateTo<T>() where T : UserControl
-        {
-            NavigateTo(typeof(T));
-        }
-
-
-        public void NavigateTo(Type windowType)
-        {
-            if (!typeof(UserControl).IsAssignableFrom(windowType))
-                throw new ArgumentException("Type must be a UserControl");
-
-            if (CurrentUserControl != null)
-            {
-                _navigationStack.Push(CurrentUserControl);
-            }
-
-            CurrentUserControl = (UserControl)_serviceProvider.GetService(windowType);
-
-            if (CurrentUserControl == null)
-                throw new InvalidOperationException($"UserControl {windowType.Name} is not registered in DI container");
-
-            this.RaisePropertyChanged(nameof(CurrentUserControl));
-        }
+        this.RaisePropertyChanged(nameof(CurrentUserControl));
     }
 }
