@@ -27,6 +27,33 @@ namespace client.ViewModels
 
     public class LogTableViewModel : ViewModelBase
     {
+        // commands for DataGrid
+        [Reactive]
+        public string SessionName { get; set; } = string.Empty;
+
+        [Reactive]
+        public string Filename { get; set; } = string.Empty;
+
+        [Reactive]
+        public int Pivot { get; set; } = 0;
+
+        [Reactive]
+        public int Page { get; set; } = 1;
+
+        [Reactive]
+        public int LogsPerPage { get; set; } = 50;
+
+        [Reactive]
+        public bool ShowHidden { get; set; } = false;
+
+        [Reactive]
+        public bool PartialComparing { get; set; } = false;
+
+        [Reactive]
+        public string SearchPrompt { get; set; } = string.Empty;
+
+
+        // other commands
         public ReactiveCommand<Unit, Unit> CreateBoardCommand { get; set; }
         public ReactiveCommand<Unit, Unit> OpenOptionPane { get; set; }
 
