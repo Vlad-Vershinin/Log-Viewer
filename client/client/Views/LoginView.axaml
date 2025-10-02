@@ -31,7 +31,7 @@
 					<RowDefinition Height="0.4*"></RowDefinition>
 				</Grid.RowDefinitions>
 				<StackPanel Grid.Column="1" Grid.Row="0" Margin="5" VerticalAlignment="Bottom">
-				<TextBox Watermark="Имя сессии" BorderBrush="LightBlue" HorizontalAlignment="Center" MinWidth="200" HorizontalContentAlignment="Left"></TextBox>
+				<TextBox Watermark="Имя сессии" Text="{Binding SessionName}" BorderBrush="LightBlue" HorizontalAlignment="Center" MinWidth="200" HorizontalContentAlignment="Left"></TextBox>
 				</StackPanel>
 				<Button Command="{Binding CommandToLogIn}" VerticalAlignment="Top"  Grid.Column="1" Grid.Row="2" Content="Войти" Padding="40, 15, 40, 15" HorizontalAlignment="Center" HorizontalContentAlignment="Center"  VerticalContentAlignment="Center" Margin="5"></Button>
 				
