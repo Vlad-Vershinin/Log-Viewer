@@ -53,16 +53,24 @@
 			</ScrollViewer>
 
 		</DockPanel>
-		<ScrollViewer  Margin="5,0,5,5" Grid.Row="1" Grid.ColumnSpan="2">
-			<ListBox Background="#1e2b55">
-				
-				
-				
-				
-				
+		
+			<ListBox ItemsSource="{Binding FilesAssigned}" Margin="5,0,5,5" Grid.Row="1" Grid.ColumnSpan="2" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+				<ListBox.ItemsPanel>
+					<ItemsPanelTemplate>
+						<StackPanel Orientation="Horizontal"/>
+					</ItemsPanelTemplate>
+				</ListBox.ItemsPanel>
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+							<TextBlock DockPanel.Dock="Top" Text="{Binding Name}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
+							<Button DockPanel.Dock="Bottom" Background="Transparent" Content="X"  Foreground="#ffb9c4"></Button>
+						</DockPanel>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
 			</ListBox>
-			
-		</ScrollViewer>
+
+		
 
 
 

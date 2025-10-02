@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.VisualElements;
+using client.Models;
 
 namespace client.ViewModels
 {
@@ -96,10 +97,41 @@ namespace client.ViewModels
 
 
 
+        [Reactive]
+        public List<AssignedFileTest> FilesAssigned { get; set; }
+
+
+
+
+
+
+
 
 
         public LogTableViewModel()
         {
+
+            FilesAssigned = new List<AssignedFileTest>();
+            FilesAssigned.Add(new AssignedFileTest("ttt1"));
+            FilesAssigned.Add(new AssignedFileTest("ttt2"));
+            FilesAssigned.Add(new AssignedFileTest("ttt3"));
+            FilesAssigned.Add(new AssignedFileTest("ttt4"));
+            FilesAssigned.Add(new AssignedFileTest("ttt4"));
+            FilesAssigned.Add(new AssignedFileTest("ttt4"));
+            FilesAssigned.Add(new AssignedFileTest("ttt4"));
+            FilesAssigned.Add(new AssignedFileTest("ttt4"));
+            FilesAssigned.Add(new AssignedFileTest("ttt4"));
+            FilesAssigned.Add(new AssignedFileTest("ttt4"));
+            FilesAssigned.Add(new AssignedFileTest("ttt4"));
+            FilesAssigned.Add(new AssignedFileTest("ttt4"));
+            FilesAssigned.Add(new AssignedFileTest("ttt4"));
+            FilesAssigned.Add(new AssignedFileTest("ttt4"));
+
+
+
+
+
+
 
             CreateBoardCommand = ReactiveCommand.Create(SwitchToDiagramPage);
             OpenOptionPane = ReactiveCommand.CreateFromTask(OpenPane);
