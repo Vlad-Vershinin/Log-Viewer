@@ -26,16 +26,51 @@ using System.Reactive.Joins;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
+
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore.SkiaSharpView.VisualElements;
+using client.Models;
+using client.services;
+
 namespace client.ViewModels
 {
 
 
     public class LogTableViewModel : ViewModelBase
     {
-        private readonly HttpClientService _httpClient;
-        private readonly SessionService _sessionService;
-        private readonly INavigationService _navigationService;
+        // commands for DataGrid
+        [Reactive]
+        public string SessionName { get; set; } = string.Empty;
 
+        [Reactive]
+        public string Filename { get; set; } = string.Empty;
+
+        [Reactive]
+        public int Pivot { get; set; } = 0;
+
+        [Reactive]
+        public int Page { get; set; } = 1;
+
+        [Reactive]
+        public int LogsPerPage { get; set; } = 50;
+
+        [Reactive]
+        public bool ShowHidden { get; set; } = false;
+
+        [Reactive]
+        public bool PartialComparing { get; set; } = false;
+
+        [Reactive]
+        public string SearchPrompt { get; set; } = string.Empty;
+
+        [Reactive]
+        public string LevelFilter { get; set; } = string.Empty;
+
+
+        // other commands
         public ReactiveCommand<Unit, Unit> CreateBoardCommand { get; set; }
         public ReactiveCommand<Unit, Unit> OpenOptionPane { get; set; }
         
@@ -62,8 +97,7 @@ namespace client.ViewModels
 
 
 
-        [Reactive]
-        public string SearchPrompt { get; set; } = string.Empty;
+       
 
 
 
@@ -76,7 +110,7 @@ namespace client.ViewModels
         public bool IsOptionPaneIsOpen { get; set; } = false;
 
         [Reactive]
-        public bool IsFullInfoPaneIsOpen { get; set; } = false;
+        public bool IsFullInfoPaneIsOpen { get; set; } = true;
 
 
 
@@ -96,7 +130,13 @@ namespace client.ViewModels
 
 
         private ObservableCollection<ParsedLog> _parsedLogs;
+        private ObservableCollection<LogEntry> _logsFromLogEntry;
         public HierarchicalTreeDataGridSource<ParsedLog> LogsSource { get; }
+        public HierarchicalTreeDataGridSource<LogEntry> EntryLogsSource { get; }
+
+
+
+
 
 
 
@@ -106,11 +146,24 @@ namespace client.ViewModels
         public GanttDiagramViewModel GanttChart { get; set; } = new GanttDiagramViewModel();
 
 
+
+
+        [Reactive]
+        public List<AssignedFileTest> FilesAssigned { get; set; }
+
         public LogTableViewModel(HttpClientService clientService, SessionService sessionService, INavigationService navigationService)
         {
             _httpClient = clientService;
             _sessionService = sessionService;
             _navigationService = navigationService;
+            FilesAssigned = new List<AssignedFileTest>();
+            FilesAssigned.Add(new AssignedFileTest("ttt1"));
+
+
+            
+
+
+
 
             CreateBoardCommand = ReactiveCommand.Create(SwitchToDiagramPage);
             OpenOptionPane = ReactiveCommand.CreateFromTask(OpenPane);
@@ -135,18 +188,22 @@ namespace client.ViewModels
 
 
             _parsedLogs = new ObservableCollection<ParsedLog>();
+            _logsFromLogEntry = new ObservableCollection<LogEntry>();
+            _logsFromLogEntry = _sessionService.Logs;
 
-            ParsedLog parsedLog = new ParsedLog("wdawd", "wadadwddddd");
-            ParsedLog parsedLog1 = new ParsedLog("wdawd", "wadadwddddd");
 
-            parsedLog.Message = "dddddddddd";
-            parsedLog.GroupedLogs = new List<ParsedLog>();
-            parsedLog1.Message = "aaaaa";
-            parsedLog1.IsHidden = true;
-            parsedLog.GroupedLogs.Add(parsedLog1);
 
-            _parsedLogs.Add(parsedLog);
-
+            /*
+            EntryLogsSource = new HierarchicalTreeDataGridSource<LogEntry>(_logsFromLogEntry)
+            {
+                Columns =
+                {
+                    new CheckBoxColumn<LogEntry>("Скрыть", x=>x.IsHidden, (x, value) =>{x.IsHidden = value;  }),
+                    new HierarchicalExpanderColumn<LogEntry>(new TextColumn<LogEntry, string>("Время", x => x.TimeStr), x=>x.GroupedLogs),
+                    new TextColumn<LogEntry, string>("Сообщение", x => x.Content)
+                },
+            };
+            */
 
             LogsSource = new HierarchicalTreeDataGridSource<ParsedLog>(_parsedLogs)
             {
