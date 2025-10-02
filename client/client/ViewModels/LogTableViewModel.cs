@@ -85,6 +85,7 @@ namespace client.ViewModels
 
         public ReactiveCommand<Unit, Unit> LoadLogsCommand { get; set; }
         public ReactiveCommand<Unit, Unit> DeleteSessionCommand { get; set; }
+        public ReactiveCommand<Unit, Unit> LeaveSessionCommand { get; set; }
 
 
         public ReactiveCommand<Unit, Unit> ApplyClampTrigger { get; set; }
@@ -110,7 +111,7 @@ namespace client.ViewModels
         public bool IsOptionPaneIsOpen { get; set; } = false;
 
         [Reactive]
-        public bool IsFullInfoPaneIsOpen { get; set; } = true;
+        public bool IsFullInfoPaneIsOpen { get; set; } = false;
 
 
 
@@ -182,6 +183,9 @@ namespace client.ViewModels
             ApplyClampTrigger = ReactiveCommand.CreateFromTask(ApplyClamp);
 
 
+            LeaveSessionCommand = ReactiveCommand.CreateFromTask(LeaveSession);
+
+
             DoubleClickCommand = ReactiveCommand.CreateFromTask<ParsedLog>(log =>
             OpenFullInfoPane(log)
             );
@@ -190,21 +194,9 @@ namespace client.ViewModels
 
             _parsedLogs = new ObservableCollection<ParsedLog>();
             _logsFromLogEntry = new ObservableCollection<LogEntry>();
-            _logsFromLogEntry = _sessionService.Logs;
+            
 
-
-
-            /*
-            EntryLogsSource = new HierarchicalTreeDataGridSource<LogEntry>(_logsFromLogEntry)
-            {
-                Columns =
-                {
-                    new CheckBoxColumn<LogEntry>("Скрыть", x=>x.IsHidden, (x, value) =>{x.IsHidden = value;  }),
-                    new HierarchicalExpanderColumn<LogEntry>(new TextColumn<LogEntry, string>("Время", x => x.TimeStr), x=>x.GroupedLogs),
-                    new TextColumn<LogEntry, string>("Сообщение", x => x.Content)
-                },
-            };
-            */
+            
 
             LogsSource = new HierarchicalTreeDataGridSource<ParsedLog>(_parsedLogs)
             {
@@ -326,6 +318,17 @@ namespace client.ViewModels
                 _sessionService.CloseSession();
                 _navigationService.NavigateTo<LoginView>();
             }
+        }
+        private async Task LeaveSession()
+        {
+            /*
+            var res = await _httpClient.HttpClient.DeleteAsync($"session/delete/{_sessionService.SessionName}");
+
+            if (res.IsSuccessStatusCode)
+            {
+                _sessionService.CloseSession();
+            }*/
+            _navigationService.NavigateTo<LoginView>();
         }
     }
 
