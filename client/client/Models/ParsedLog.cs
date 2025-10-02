@@ -14,8 +14,8 @@ public class ParsedLog
     }
 
     [Required]
-    public string Filename { get; }
-    public string RawJSON { get; }
+    public string Filename { get; } = string.Empty;
+    public string RawJSON { get; } = string.Empty;
     [Required]
     public DateTime Timestamp { get; set; }
     public string TimestampStr { get { return Timestamp.ToLongTimeString(); } }
@@ -27,7 +27,7 @@ public class ParsedLog
     
     public bool IsHidden { get; set; } = false;
     public bool IsAnomaly { get; set; } = false;
-    public List<ParsedLog> GroupedLogs { get; set; } // логи из этого листа распоковываем как отдельные записи в бд
+    public List<ParsedLog>? GroupedLogs { get; set; } // логи из этого листа распоковываем как отдельные записи в бд
 
     private JObject other_keys;
 }

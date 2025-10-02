@@ -7,10 +7,14 @@
 			 xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="client.Views.LogTableView"
-             x:DataType="vm:LogTableViewModel">
+             x:DataType="vm:LogTableViewModel"
+			 xmlns:conv="clr-namespace:client.ViewModels">
 
-	
-	
+	<UserControl.Resources>
+		<conv:TextColorConverter x:Key="TextColorConverter"/>
+	</UserControl.Resources>
+
+
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition></RowDefinition>
@@ -29,7 +33,7 @@
 			</StackPanel>
 			<ScrollViewer Background="#000a2c" Grid.Row="0" Margin="5">
 				<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-					
+
 					<Border BorderThickness="0" BorderBrush="AliceBlue" VerticalAlignment="Stretch" MinHeight="200">
 						<lvc:CartesianChart Margin="5"  Background="#1d2251"
 									DataContext="{Binding GanttChart}"
@@ -48,7 +52,7 @@
 					<Border BorderThickness="0" BorderBrush="AliceBlue" VerticalAlignment="Stretch" MinHeight="200">
 						<lvc:CartesianChart Margin="5" Background="#1d2251" DataContext="{Binding TestChart}" Title="{Binding Title}" Series="{Binding Series}"></lvc:CartesianChart>
 					</Border>
-					
+
 				</StackPanel>
 			</ScrollViewer>
 
@@ -87,16 +91,16 @@
 					<Button Margin="5" Command="{Binding OpenOptionPane}">
 						<Image Source="avares://client/Assets/Additional.png" Height="20"/>
 					</Button>
-					
+
 				</StackPanel>
 			</DockPanel>
 			<Border VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="1" Margin="0,5,5,5">
 				<TreeDataGrid Name="LogGrid" Source="{Binding LogsSource}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 					
 				</TreeDataGrid>
-			
+
 			</Border>
-			
+
 		</DockPanel>
 
 

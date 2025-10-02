@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using client.ViewModels;
 using ReactiveUI;
+using System;
 
 namespace client.Views;
 

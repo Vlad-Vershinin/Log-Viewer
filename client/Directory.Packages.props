@@ -17,6 +17,7 @@
     <PackageVersion Include="Avalonia.Browser" Version="11.3.6" />
     <PackageVersion Include="Avalonia.Android" Version="11.3.6" />
     <PackageVersion Include="Avalonia.ReactiveUI" Version="11.3.6" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.9" />
     <PackageVersion Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.0.0-rc6.1" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageVersion Include="ReactiveUI.Fody" Version="19.5.41" />
