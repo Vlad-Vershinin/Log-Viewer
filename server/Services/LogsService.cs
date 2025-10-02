@@ -19,34 +19,44 @@ public class LogsService : ILogsService
     {
         List<ParsedLog> result = new List<ParsedLog>();
         DateTime last_time = DateTime.MinValue;
+        int plan_entries = 0;
+        int apply_entries = 0;
 
         foreach (string line in json_data.Split("\n"))
         {
             ParsedLog log = new ParsedLog(filename, line, sessionName);
             try
             {
-                JObject dict = JObject.Parse(line);
-                
-                if (dict.ContainsKey("@timestamp"))
+                if (line.Length > 1)
                 {
-                    log.Timestamp = Convert.ToDateTime(dict["@timestamp"]);
-                    last_time = log.Timestamp;
-                    dict.Remove("@timestamp");
-                } else { log.IsAnomaly = true; log.Timestamp = last_time.AddMicroseconds(1); }
+                    JObject dict = JObject.Parse(line);
 
-                if (dict.ContainsKey("@level"))
-                {
-                    log.Level = dict["@level"].ToString();
-                    dict.Remove("@level");
-                } else { log.IsAnomaly = true; log.Level = "@level missed"; }
+                    if (dict.ContainsKey("@timestamp"))
+                    {
+                        log.Timestamp = Convert.ToDateTime(dict["@timestamp"]);
+                        last_time = log.Timestamp;
+                        dict.Remove("@timestamp");
+                    }
+                    else { log.IsAnomaly = true; log.Timestamp = last_time.AddMicroseconds(1); }
 
-                if (dict.ContainsKey("@message"))
-                {
-                    log.Message = dict["@message"].ToString();
-                    dict.Remove("@message");
-                } else { log.IsAnomaly = true; log.Message = "@message missed"; }
+                    if (dict.ContainsKey("@level"))
+                    {
+                        log.Level = dict["@level"].ToString();
+                        dict.Remove("@level");
+                    }
+                    else { log.IsAnomaly = true; log.Level = "@level missed"; }
 
-                log.OtherKeys = dict;
+                    if (dict.ContainsKey("@message"))
+                    {
+                        log.Message = dict["@message"].ToString();
+                        if (log.Message.ToLower().Contains("plan")) plan_entries++;
+                        if (log.Message.ToLower().Contains("apply")) apply_entries++;
+                        dict.Remove("@message");
+                    }
+                    else { log.IsAnomaly = true; log.Message = "@message missed"; }
+
+                    log.OtherKeys = dict;
+                }
             }
             catch (Newtonsoft.Json.JsonReaderException)
             {
@@ -55,7 +65,7 @@ public class LogsService : ILogsService
 
             result.Add(log);
         }
-        _logsRepository.UploadLogsToDBAsync(result);
+        _logsRepository.UploadLogsToDBAsync(result, apply_entries >= plan_entries);
     }
 
     /*

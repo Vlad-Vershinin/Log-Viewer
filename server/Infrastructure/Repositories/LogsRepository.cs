@@ -35,8 +35,10 @@ public class LogsRepository : ILogsRepository
         return res ?? new List<ParsedLog>();
     }
 
-    public async Task UploadLogsToDBAsync(List<ParsedLog> parsedLogs)
+    public async Task UploadLogsToDBAsync(List<ParsedLog> parsedLogs, bool isApply)
     {
+        foreach (ParsedLog log in parsedLogs) { log.Filename = log.Filename + (isApply ? " [apply]" : " [plan]"); }
+
         foreach (ParsedLog log in parsedLogs) {
             await _context.ParsedLogs.AddAsync(log);
         }
