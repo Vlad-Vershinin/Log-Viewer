@@ -39,6 +39,8 @@ public partial class App : Application
         services.AddTransient<DiagramViewModel>();
         services.AddTransient<LoginViewModel>();
 
+        // add windows
+        services.AddSingleton<MainWindow>();
 
         _serviceProvider = services.BuildServiceProvider();
         ServiceProvider = _serviceProvider;
@@ -46,10 +48,9 @@ public partial class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             MainWindowViewModel mainViewModel = ServiceProvider.GetRequiredService<MainWindowViewModel>();
-            desktop.MainWindow = new MainWindow
-            {
-                DataContext = mainViewModel
-            };
+            desktop.MainWindow = ServiceProvider.GetService<MainWindow>();
+            desktop.MainWindow.DataContext = mainViewModel;
+
             ServiceProvider.GetService<INavigationService>().NavigateTo<LoginView>();
         }
         base.OnFrameworkInitializationCompleted();

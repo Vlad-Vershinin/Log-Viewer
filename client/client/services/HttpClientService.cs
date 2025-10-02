@@ -9,11 +9,11 @@ namespace client.services;
 
 public class HttpClientService
 {
-    public HttpClient _HttpClient { get; set; }
+    public HttpClient HttpClient { get; set; }
 
     public HttpClientService()
     {
-        _HttpClient = new HttpClient
+        HttpClient = new HttpClient
         {
             BaseAddress = new Uri("http://localhost:7084/api/")
         };

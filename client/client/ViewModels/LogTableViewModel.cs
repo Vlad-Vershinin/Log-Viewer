@@ -2,24 +2,29 @@
 using Avalonia.Controls.Models.TreeDataGrid;
 using Avalonia.Layout;
 using Avalonia.Media;
+using Avalonia.Platform.Storage;
+using client.services;
+using client.services.interfaces;
 using client.ViewModels.Charts;
+using client.Views;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore.SkiaSharpView.VisualElements;
+using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Splat.ModeDetection;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Reactive;
+using System.Reactive.Joins;
 using System.Text;
 using System.Threading.Tasks;
-
-
-
-
-using LiveChartsCore.SkiaSharpView;
-using LiveChartsCore.SkiaSharpView.Painting;
-using LiveChartsCore.SkiaSharpView.VisualElements;
 
 namespace client.ViewModels
 {
@@ -27,9 +32,13 @@ namespace client.ViewModels
 
     public class LogTableViewModel : ViewModelBase
     {
+        private readonly HttpClientService _httpClient;
+        private readonly SessionService _sessionService;
+        private readonly INavigationService _navigationService;
+
         public ReactiveCommand<Unit, Unit> CreateBoardCommand { get; set; }
         public ReactiveCommand<Unit, Unit> OpenOptionPane { get; set; }
-
+        
 
 
 
@@ -38,6 +47,9 @@ namespace client.ViewModels
         public ReactiveCommand<Unit, Unit> FirstPage { get; set; }
         public ReactiveCommand<Unit, Unit> LastPage { get; set; }
 
+
+        public ReactiveCommand<Unit, Unit> LoadLogsCommand { get; set; }
+        public ReactiveCommand<Unit, Unit> DeleteSessionCommand { get; set; }
 
         [Reactive]
         public int CurrentPage { get; set; }
@@ -58,8 +70,11 @@ namespace client.ViewModels
         public TestChartViewModel TestChart { get; set; } = new TestChartViewModel();
 
 
-        public LogTableViewModel()
+        public LogTableViewModel(HttpClientService clientService, SessionService sessionService, INavigationService navigationService)
         {
+            _httpClient = clientService;
+            _sessionService = sessionService;
+            _navigationService = navigationService;
 
             CreateBoardCommand = ReactiveCommand.Create(SwitchToDiagramPage);
             OpenOptionPane = ReactiveCommand.CreateFromTask(OpenPane);
@@ -70,7 +85,8 @@ namespace client.ViewModels
             LastPage = ReactiveCommand.CreateFromTask(ToLastPage);
             FirstPage = ReactiveCommand.CreateFromTask(ToFirstPage);
 
-
+            LoadLogsCommand = ReactiveCommand.CreateFromTask(LoadLogs);
+            DeleteSessionCommand = ReactiveCommand.CreateFromTask(DeleteSession);
 
 
 
@@ -98,8 +114,6 @@ namespace client.ViewModels
                     new TextColumn<ParsedLog, string>("Сообщение", x => x.Message)
                 },
             };
-
-
         }
 
 
@@ -146,6 +160,55 @@ namespace client.ViewModels
         }
 
 
+        private async Task LoadLogs()
+        {
+            var window = App.ServiceProvider.GetService<MainWindow>();
+
+            var fileTypes = new FilePickerFileType[]
+            {
+                new FilePickerFileType("JSON Files")
+                {
+                    Patterns = new[] { "*.json" },
+                    AppleUniformTypeIdentifiers = new[] { "public.json" },
+                    MimeTypes = new[] { "application/json" }
+                },
+                FilePickerFileTypes.TextPlain
+            };
+
+            var files = await window.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+            {
+                Title = "Выберите файлы логов",
+                AllowMultiple = true,
+                FileTypeFilter = fileTypes
+            });
+
+            if (files == null || !files.Any())
+                return;
+
+
+            using var content = new MultipartFormDataContent();
+
+            content.Add(new StringContent(_sessionService.SessionName), "SessionName");
+
+            foreach (var file in files)
+            {
+                var fileContent = new StreamContent(await file.OpenReadAsync());
+                content.Add(fileContent, "Files", file.Name);
+            }
+
+            var response = await _httpClient.HttpClient.PostAsync("log/logs", content);
+        }
+
+        private async Task DeleteSession()
+        {
+            var res = await _httpClient.HttpClient.DeleteAsync($"session/delete/{_sessionService.SessionName}");
+
+            if (res.IsSuccessStatusCode)
+            {
+                _sessionService.CloseSession();
+                _navigationService.NavigateTo<LoginView>();
+            }
+        }
     }
 
 }

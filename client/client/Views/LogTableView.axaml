@@ -106,9 +106,9 @@
 				<Border Background="#0e004e">
 					<Border Margin="5" Background="#0d0035">
 						<StackPanel>
-							<Button Content="Имрорт логов (*.json | *.txt)" HorizontalAlignment="Stretch"></Button>
+							<Button Content="Имрорт логов (*.json | *.txt)" HorizontalAlignment="Stretch" Command="{Binding LoadLogsCommand}"></Button>
 							<Button Content="Параметры" HorizontalAlignment="Stretch"></Button>
-							<Button Content="Выйти из сессии" HorizontalAlignment="Stretch"></Button>
+							<Button Content="Выйти из сессии" HorizontalAlignment="Stretch" Command="{Binding DeleteSessionCommand}"></Button>
 						</StackPanel>
 					</Border>
 				</Border>
