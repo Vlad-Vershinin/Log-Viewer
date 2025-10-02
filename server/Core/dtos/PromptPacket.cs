@@ -1,9 +1,4 @@
 
-/*
- TODO: Добавить свойства для фильтров,
-после чего реализовать их в LogsRepository.
- */
-
 public class PromptPacket
 {
     public string SessionName { get; set; } // Идентификационное имя сессии
@@ -14,5 +9,5 @@ public class PromptPacket
     public bool ShowHidden { get; set; } // Показать скрытые логи
     public bool PartialComparing { get; set; } // Включить поиск по частичному совпадению
     public string SearchPrompt { get; set; } // Всетекстовой поиск по частичному совпадению с этим промптом
-    public string LevelFilter { get; set; } // Фильтр по уровню логов (например, "Error", "Warning", "Info")
+    public string LevelFilter { get; set; } // info,debug,trace,warn,error,missed Перечисленние уровней, какие нужно отобразить
 }

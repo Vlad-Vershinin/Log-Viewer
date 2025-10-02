@@ -15,7 +15,7 @@ namespace client.services
     {
         private readonly HttpClient _httpClient;
 
-        public ObservableCollection<LogEntry>? Logs { get; set; } = [];
+        public ObservableCollection<ParsedLog>? Logs { get; set; } = [];
 
         public PromptService(HttpClient httpClient)
         {
@@ -38,7 +38,7 @@ namespace client.services
             var response = await _httpClient.GetAsync($"logs/logs/{query}");
             response.EnsureSuccessStatusCode();
 
-            var logs = await response.Content.ReadFromJsonAsync<List<LogEntry>>();
+            var logs = await response.Content.ReadFromJsonAsync<List<ParsedLog>>();
             Logs?.Clear();
             if (logs != null)
             {

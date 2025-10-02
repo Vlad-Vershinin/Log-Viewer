@@ -21,7 +21,7 @@ public class ParsedLog
     [Required]
     public DateTime Timestamp { get; set; }
     [Required]
-    public string Level { get; set; } = string.Empty; // ['info', 'debug', 'trace', 'warn', 'error', '@level missed']
+    public string Level { get; set; } = string.Empty; // ['info', 'debug', 'trace', 'warn', 'error', 'missed']
     public string Message { get; set; } = string.Empty;
     public string OtherKeysJSON
     { 

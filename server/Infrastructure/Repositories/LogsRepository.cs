@@ -20,17 +20,21 @@ public class LogsRepository : ILogsRepository
 
     public async Task<List<ParsedLog>> GetLogsAsync(PromptPacket prompts)
     {
-        var res = await _context.ParsedLogs
-            .Where(log => log.SessionName == prompts.SessionName
-            && log.Filename == prompts.Filename
-            && (!log.IsHidden || prompts.ShowHidden)
-            && (prompts.SearchPrompt.Length == 0 ? true : (prompts.PartialComparing ? StringPartialComparer.Compare(log.Timestamp.ToString(), prompts.SearchPrompt) : log.Timestamp.ToString().Contains(prompts.SearchPrompt)
+        var req = _context.ParsedLogs
+            .Where(log => log.SessionName == prompts.SessionName)
+            .Where(log => log.Filename == prompts.Filename)
+            .Where(log => prompts.LevelFilter.Contains(log.Level))
+            .Where(log => prompts.SearchPrompt.Length == 0 ? true : (prompts.PartialComparing ? StringPartialComparer.Compare(log.Timestamp.ToString(), prompts.SearchPrompt) : log.Timestamp.ToString().Contains(prompts.SearchPrompt)
             || prompts.PartialComparing ? StringPartialComparer.Compare(log.Message.ToString(), prompts.SearchPrompt) : log.Message.ToString().Contains(prompts.SearchPrompt)
             || prompts.PartialComparing ? StringPartialComparer.Compare(log.Level.ToString(), prompts.SearchPrompt) : log.Level.ToString().Contains(prompts.SearchPrompt)
-            || prompts.PartialComparing ? StringPartialComparer.JObjectCompare(log.OtherKeys, prompts.SearchPrompt) : log.Timestamp.ToString().Contains(prompts.SearchPrompt))))
-            .Skip(prompts.LogsPerPage * prompts.Page + prompts.Pivot)
-            .Take(prompts.LogsPerPage)
-            .ToListAsync();
+            || prompts.PartialComparing ? StringPartialComparer.JObjectCompare(log.OtherKeys, prompts.SearchPrompt) : log.Timestamp.ToString().Contains(prompts.SearchPrompt)));
+
+        if (!prompts.ShowHidden)
+        {
+            req.Where(log => !log.IsHidden);
+        }
+        
+        List<ParsedLog> res = await req.Skip(prompts.LogsPerPage * prompts.Page + prompts.Pivot).Take(prompts.LogsPerPage).ToListAsync();
 
         return res ?? new List<ParsedLog>();
     }
@@ -44,8 +48,10 @@ public class LogsRepository : ILogsRepository
             .ToListAsync();
     }
 
-    public async Task UploadLogsToDBAsync(List<ParsedLog> parsedLogs)
+    public async Task UploadLogsToDBAsync(List<ParsedLog> parsedLogs, bool isApply)
     {
+        foreach (ParsedLog log in parsedLogs) { log.Filename = (isApply ? "[apply] " : "[plan] ") + log.Filename; }
+
         foreach (ParsedLog log in parsedLogs) {
             await _context.ParsedLogs.AddAsync(log);
         }
