@@ -55,9 +55,6 @@ namespace client.ViewModels
         [Reactive]
         public string LevelFilter { get; set; } = string.Empty;
 
-        [Reactive]
-        public string TypeFilter { get; set; } = string.Empty;
-
 
         // other commands
         public ReactiveCommand<Unit, Unit> CreateBoardCommand { get; set; }
