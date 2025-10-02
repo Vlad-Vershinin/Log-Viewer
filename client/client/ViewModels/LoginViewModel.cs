@@ -1,54 +1,40 @@
 ﻿using client.services;
 using client.services.interfaces;
+using client.Views;
 using ReactiveUI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
+using ReactiveUI.Fody.Helpers;
 using System.Reactive;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace client.ViewModels
+namespace client.ViewModels;
+
+public class LoginViewModel : ViewModelBase
 {
-    public class LoginViewModel : ViewModelBase
+    private readonly INavigationService _navigationService;
+    private readonly HttpClientService _httpClient;
+    private readonly SessionService _sessionService;
+
+    [Reactive] public string SessionName { get; set; } = string.Empty;
+
+    public ReactiveCommand<Unit, Unit> CommandToLogIn { get; set; }
+
+    public LoginViewModel(INavigationService navigationService, HttpClientService clientService, SessionService sessionService)
     {
-        private string _sessionName;
-        public string SessionName
+        _navigationService = navigationService;
+        _httpClient = clientService;
+        _sessionService = sessionService;
+
+        CommandToLogIn = ReactiveCommand.CreateFromTask(Login);
+    }
+
+    private async Task Login()
+    {
+        var res = await _httpClient._HttpClient.PostAsync($"session/connect/{SessionName}", null);
+
+        if(res.IsSuccessStatusCode)
         {
-            get => _sessionName;
-            set => this.RaiseAndSetIfChanged(ref _sessionName, value);
-        }
-
-        public ReactiveCommand<Unit, Unit> CommandToLogIn { get; set; }
-
-        private readonly INavigationService _navigationService;
-        public HttpClient _HttpClient { get; set; }
-
-
-
-
-        public LoginViewModel(INavigationService navigationService)
-        {
-            CommandToLogIn = ReactiveCommand.Create(Login);
-            //CommandToLogIn = ReactiveCommand.Create(LoginToNextPage);
-
-            _navigationService = navigationService;
-        }
-
-
-        private void LoginToNextPage()
-        {
-
-        }
-
-
-        private void Login()
-        {
-            if (!string.IsNullOrWhiteSpace(SessionName))
-            {
-                SessionService.Instance.InitializeSession(SessionName);
-            }
+            _sessionService.Init(SessionName);
+            _navigationService.NavigateTo<LogTableView>();
         }
     }
 }

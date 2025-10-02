@@ -1,4 +1,6 @@
 using Avalonia.Controls;
+using client.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace client.Views
 {
@@ -7,6 +9,7 @@ namespace client.Views
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = App.ServiceProvider.GetService<MainWindowViewModel>();
         }
     }
 }

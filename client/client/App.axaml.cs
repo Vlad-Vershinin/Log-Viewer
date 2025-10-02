@@ -6,47 +6,52 @@ using client.ViewModels;
 using client.Views;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 
-namespace client
+namespace client;
+
+public partial class App : Application
 {
-    public partial class App : Application
+    private IServiceProvider? _serviceProvider;
+    public static IServiceProvider? ServiceProvider { get; private set; }
+
+    public override void Initialize()
     {
-        private IServiceProvider? _serviceProvider;
-        public static IServiceProvider? ServiceProvider { get; private set; }
+        AvaloniaXamlLoader.Load(this);
+    }
 
-        public override void Initialize()
+    public override void OnFrameworkInitializationCompleted()
+    {
+        var services = new ServiceCollection();
+
+        // add services
+        services.AddSingleton<INavigationService, NavigationService>();
+        services.AddSingleton<HttpClientService>();
+        services.AddSingleton<SessionService>();
+
+        // add views
+        services.AddTransient<LoginView>();
+        services.AddTransient<LogTableView>();
+
+        // add view models
+        services.AddTransient<MainWindowViewModel>();
+        services.AddTransient<LogTableViewModel>();
+        services.AddTransient<DiagramViewModel>();
+        services.AddTransient<LoginViewModel>();
+
+
+        _serviceProvider = services.BuildServiceProvider();
+        ServiceProvider = _serviceProvider;
+
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            AvaloniaXamlLoader.Load(this);
-        }
-
-        public override void OnFrameworkInitializationCompleted()
-        {
-            var services = new ServiceCollection();
-            services.AddSingleton<INavigationService, NavigationService>();
-
-            services.AddTransient<MainWindowViewModel>();
-            services.AddTransient<LogTableViewModel>();
-            services.AddTransient<DiagramViewModel>();
-            services.AddTransient<LoginViewModel>();
-
-
-            _serviceProvider = services.BuildServiceProvider();
-            ServiceProvider = _serviceProvider;
-
-            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            MainWindowViewModel mainViewModel = ServiceProvider.GetRequiredService<MainWindowViewModel>();
+            desktop.MainWindow = new MainWindow
             {
-                MainWindowViewModel mainViewModel = ServiceProvider.GetRequiredService<MainWindowViewModel>();
-                desktop.MainWindow = new MainWindow
-                {
-                    DataContext = mainViewModel
-                };
-            }
-
-
-            base.OnFrameworkInitializationCompleted();
+                DataContext = mainViewModel
+            };
+            ServiceProvider.GetService<INavigationService>().NavigateTo<LoginView>();
         }
-
+        base.OnFrameworkInitializationCompleted();
     }
 }
