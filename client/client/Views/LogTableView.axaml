@@ -119,8 +119,8 @@
 								<ColumnDefinition></ColumnDefinition>
 								<ColumnDefinition></ColumnDefinition>
 							</Grid.ColumnDefinitions>
-							
-							<TreeDataGrid CanUserSortColumns="False"></TreeDataGrid>
+
+							<TextBlock DataContext="{Binding DoubleTappedLog}" Text="{Binding Message}"></TextBlock>
 						</Grid>
 					</Border>
 				</Border>
