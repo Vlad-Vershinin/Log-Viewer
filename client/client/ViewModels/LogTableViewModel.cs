@@ -51,9 +51,21 @@ namespace client.ViewModels
         public ReactiveCommand<Unit, Unit> LoadLogsCommand { get; set; }
         public ReactiveCommand<Unit, Unit> DeleteSessionCommand { get; set; }
 
+
+        public ReactiveCommand<Unit, Unit> ApplyClampTrigger { get; set; }
+
+
         [Reactive]
-        public int CurrentPage { get; set; }
+        public int CurrentPage { get; set; } = 1;
+        public string CurrentPageStr { get { return $"{CurrentPage}"; } }
         public int MaxPage { get; set; } = 100;
+
+
+
+        [Reactive]
+        public string SearchPrompt { get; set; } = string.Empty;
+
+
 
 
 
@@ -63,11 +75,35 @@ namespace client.ViewModels
         [Reactive]
         public bool IsOptionPaneIsOpen { get; set; } = false;
 
+        [Reactive]
+        public bool IsFullInfoPaneIsOpen { get; set; } = false;
+
+
+
+
+
+        [Reactive]
+        public ParsedLog SelectedLog { get; set; }
+
+
+        [Reactive]
+        public ParsedLog DoubleTappedLog { get; set; }
+
+        public ReactiveCommand<ParsedLog, Unit> DoubleClickCommand { get; }
+
+
+
+
 
         private ObservableCollection<ParsedLog> _parsedLogs;
         public HierarchicalTreeDataGridSource<ParsedLog> LogsSource { get; }
 
+
+
+
+        // Charts
         public TestChartViewModel TestChart { get; set; } = new TestChartViewModel();
+        public GanttDiagramViewModel GanttChart { get; set; } = new GanttDiagramViewModel();
 
 
         public LogTableViewModel(HttpClientService clientService, SessionService sessionService, INavigationService navigationService)
@@ -85,9 +121,16 @@ namespace client.ViewModels
             LastPage = ReactiveCommand.CreateFromTask(ToLastPage);
             FirstPage = ReactiveCommand.CreateFromTask(ToFirstPage);
 
+
+
+            ApplyClampTrigger = ReactiveCommand.CreateFromTask(ApplyClamp);
             LoadLogsCommand = ReactiveCommand.CreateFromTask(LoadLogs);
             DeleteSessionCommand = ReactiveCommand.CreateFromTask(DeleteSession);
 
+
+            DoubleClickCommand = ReactiveCommand.CreateFromTask<ParsedLog>(log =>
+            OpenFullInfoPane(log)
+            );
 
 
 
@@ -117,31 +160,45 @@ namespace client.ViewModels
         }
 
 
+            
+        }
 
 
 
 
+        public async Task OpenFullInfoPane(ParsedLog log)
+        {
+            DoubleTappedLog = log;
+            IsFullInfoPaneIsOpen = true;
+        }
 
 
 
+        public async Task ApplyClamp()
+        {
+            CurrentPage = Math.Clamp(CurrentPage, 1, MaxPage);
+        }
 
         public async Task ToNextPage()
         {
-            CurrentPage = Math.Clamp(CurrentPage++, 0, MaxPage);
+            CurrentPage++;
+            ApplyClamp();
         }
         public async Task ToPreviousPage()
         {
-            CurrentPage = Math.Clamp(CurrentPage--, 0, MaxPage);
-
+            CurrentPage--;
+            ApplyClamp();
         }
         public async Task ToLastPage()
         {
-            CurrentPage = Math.Clamp(CurrentPage++, 0, MaxPage);
+            CurrentPage++;
+            ApplyClamp();
 
         }
         public async Task ToFirstPage()
         {
-            CurrentPage = Math.Clamp(CurrentPage--, 0, MaxPage);
+            CurrentPage = 1;
+            ApplyClamp();
         }
 
 

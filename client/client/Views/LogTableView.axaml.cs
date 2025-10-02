@@ -8,12 +8,24 @@ namespace client.Views;
 
 public partial class LogTableView : UserControl
 {
+    private LogTableViewModel logTableViewModel = new LogTableViewModel();
     public LogTableView()
     {
         InitializeComponent();
         DataContext = App.ServiceProvider.GetService<LogTableViewModel>();
+        LogGrid.DoubleTapped += (s, e) =>
+        {
+            if (LogGrid.RowSelection != null)
+            {
+                logTableViewModel.DoubleClickCommand.Execute((ParsedLog)LogGrid.RowSelection.SelectedItem);
+            }
+        };
+
+
+    }
 		  
     }    
 }
 
+}
 
