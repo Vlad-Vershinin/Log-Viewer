@@ -264,7 +264,7 @@ namespace client.ViewModels
 
         public async Task RefreshPage()
         {
-            _parsedLogs = awa _promptService.GetLogsAsync(_promptPacket);
+            
             
         }
 
