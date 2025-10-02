@@ -1,3 +1,5 @@
+
+using DynamicData;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -13,10 +15,10 @@ public class ParsedLog
     }
 
     [Required]
-    public string Filename { get; } = string.Empty;
+    public string Filename { get; } = string.Empty; 
     public string RawJSON { get; } = string.Empty;
     [Required]
-    public DateTime Timestamp { get; set; }
+    public DateTime Timestamp { get; set; } //*
     public string TimestampStr { get { return Timestamp.ToLongTimeString(); } }
     [Required]
     public string Level { get; set; } = string.Empty; // ['info', 'debug', 'trace', 'warn', 'error', '@level missed']

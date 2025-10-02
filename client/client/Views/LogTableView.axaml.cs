@@ -3,6 +3,8 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using client.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
+using ReactiveUI;
+using System;
 
 namespace client.Views;
 
@@ -22,5 +24,9 @@ public partial class LogTableView : UserControl
         };
 
 
-    }	  
-}    
+    }
+
+}
+
+
+

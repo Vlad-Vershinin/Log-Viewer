@@ -29,7 +29,7 @@
 
 		<DockPanel>
 			<StackPanel DockPanel.Dock="Top" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
-				<TextBox Margin="5" Text="{Binding SearchPrompt, Mode=TwoWay}" VerticalAlignment="Bottom" Watermark="Поиск"></TextBox>
+				<TextBox Margin="5" DataContext="{Binding _promptPacket}" Text="{Binding SearchPrompt, Mode=TwoWay}" VerticalAlignment="Bottom" Watermark="Поиск"></TextBox>
 			</StackPanel>
 			<ScrollViewer Background="#000a2c" Grid.Row="0" Margin="5">
 				<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -57,16 +57,24 @@
 			</ScrollViewer>
 
 		</DockPanel>
-		<ScrollViewer  Margin="5,0,5,5" Grid.Row="1" Grid.ColumnSpan="2">
-			<ListBox Background="#1e2b55">
-
-
-
-
-
+		
+			<ListBox ItemsSource="{Binding FilesAssigned}" Margin="5,0,5,5" Grid.Row="1" Grid.ColumnSpan="2" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+				<ListBox.ItemsPanel>
+					<ItemsPanelTemplate>
+						<StackPanel Orientation="Horizontal"/>
+					</ItemsPanelTemplate>
+				</ListBox.ItemsPanel>
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+							<TextBlock DockPanel.Dock="Top" Text="{Binding Name}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
+							<Button DockPanel.Dock="Bottom" Background="Transparent" Content="X"  Foreground="#ffb9c4"></Button>
+						</DockPanel>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
 			</ListBox>
 
-		</ScrollViewer>
+		
 
 
 
@@ -105,9 +113,10 @@
 					<Border Margin="5" Background="#0d0035">
 						<StackPanel>
 							<Button Content="Имрорт логов (*.json | *.txt)" Command="{Binding LoadLogsCommand}" Background="Transparent" HorizontalAlignment="Stretch"></Button>
-							<CheckBox Content="Показ скрытых элементов" Margin="8,0,0,0"></CheckBox>
-							<CheckBox Content="Поиск по частичному совпадению" Margin="8,0,0,0"></CheckBox>
-							<Button Content="Выйти из сессии" Foreground="#ffb9c4" Command="{Binding DeleteSessionCommand}" Background="Transparent" HorizontalAlignment="Stretch"></Button>
+							<CheckBox DataContext="{Binding _promptPacket}" IsChecked="{Binding ShowHidden}" Content="Показ скрытых элементов" Margin="8,0,0,0"></CheckBox>
+							<CheckBox DataContext="{Binding _promptPacket}"  IsChecked="{Binding PartialComparing}" Content="Поиск по частичному совпадению" Margin="8,0,0,0"></CheckBox>
+							<Button Content="Выйти из сессии" Foreground="#ffb9c4" Command="{Binding LeaveSessionCommand}" Background="Transparent" HorizontalAlignment="Stretch"></Button>
+							<Button Content="Прервать и очистить сессию из сессии" Foreground="#ffb9c4" Command="{Binding DeleteSessionCommand}" Background="Transparent" HorizontalAlignment="Stretch"></Button>
 						</StackPanel>
 					</Border>
 				</Border>
@@ -118,14 +127,36 @@
 			<SplitView.Pane>
 				<Border Background="#000a2c">
 					<Border Margin="5">
-						<Grid>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition></ColumnDefinition>
-								<ColumnDefinition></ColumnDefinition>
-							</Grid.ColumnDefinitions>
-							
-							<TreeDataGrid CanUserSortColumns="False"></TreeDataGrid>
-						</Grid>
+
+
+
+						<ScrollViewer DataContext="{Binding DoubleTappedLog}" VerticalScrollBarVisibility="Visible">
+							<StackPanel>
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="100"></ColumnDefinition>
+									<ColumnDefinition></ColumnDefinition>
+								</Grid.ColumnDefinitions>
+
+								<StackPanel>
+									<TextBlock Margin="5" Text="Время :"></TextBlock>
+									<TextBlock Margin="5"  Text="Сообщение :"></TextBlock>
+									<TextBlock Margin="5"  Text="Уровень :"></TextBlock>
+								</StackPanel>
+								<StackPanel Grid.Column="1">
+									<TextBlock Margin="5" Text="{Binding Timestamp}"></TextBlock>
+									<TextBlock Margin="5"  Text="{Binding Message}"></TextBlock>
+									<TextBlock Margin="5"  Text="{Binding Level}"></TextBlock>
+									
+								</StackPanel>
+							</Grid>
+								<Expander Margin="5">
+									<Expander.Header>
+										<TextBlock Text="Другие свойства"></TextBlock>
+									</Expander.Header>
+								</Expander>
+							</StackPanel>
+						</ScrollViewer>
 					</Border>
 				</Border>
 			</SplitView.Pane>

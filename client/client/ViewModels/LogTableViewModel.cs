@@ -26,16 +26,70 @@ using System.Reactive.Joins;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
+
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore.SkiaSharpView.VisualElements;
+using client.Models;
+using client.services;
+
 namespace client.ViewModels
 {
 
 
     public class LogTableViewModel : ViewModelBase
     {
-        private readonly HttpClientService _httpClient;
-        private readonly SessionService _sessionService;
-        private readonly INavigationService _navigationService;
+        // commands for DataGrid
+        [Reactive]
+        public string SessionName { get; set; } = string.Empty;
 
+        [Reactive]
+        public string Filename { get; set; } = string.Empty;
+
+        [Reactive]
+        public int Pivot { get; set; } = 0;
+
+        [Reactive]
+        public int Page { get; set; } = 1;
+
+        [Reactive]
+        public int LogsPerPage { get; set; } = 50;
+
+        [Reactive]
+        public bool ShowHidden { get; set; } = false;
+
+        [Reactive]
+        public bool PartialComparing { get; set; } = false;
+
+        [Reactive]
+        public string SearchPrompt { get; set; } = string.Empty;
+
+        [Reactive]
+        public string LevelFilter { get; set; } = string.Empty;
+
+
+        public void AllignPromptPacket()
+        {
+            _promptPacket.SessionName = SessionName;
+            _promptPacket.Filename = Filename;
+            _promptPacket.Page = Page;
+            _promptPacket.LogsPerPage = LogsPerPage;
+            _promptPacket.ShowHidden = ShowHidden;
+            _promptPacket.PartialComparing = PartialComparing;
+            _promptPacket.SearchPrompt = SearchPrompt;
+            _promptPacket.LevelFilter = LevelFilter;
+        }
+
+
+
+
+
+
+
+
+        // other commands
         public ReactiveCommand<Unit, Unit> CreateBoardCommand { get; set; }
         public ReactiveCommand<Unit, Unit> OpenOptionPane { get; set; }
         
@@ -50,9 +104,14 @@ namespace client.ViewModels
 
         public ReactiveCommand<Unit, Unit> LoadLogsCommand { get; set; }
         public ReactiveCommand<Unit, Unit> DeleteSessionCommand { get; set; }
+        public ReactiveCommand<Unit, Unit> LeaveSessionCommand { get; set; }
 
 
         public ReactiveCommand<Unit, Unit> ApplyClampTrigger { get; set; }
+
+
+
+        public ReactiveCommand<Unit, Unit> Refresh { get; set; }
 
 
         [Reactive]
@@ -62,8 +121,7 @@ namespace client.ViewModels
 
 
 
-        [Reactive]
-        public string SearchPrompt { get; set; } = string.Empty;
+       
 
 
 
@@ -101,9 +159,30 @@ namespace client.ViewModels
 
 
 
+
+
+
+
         // Charts
         public TestChartViewModel TestChart { get; set; } = new TestChartViewModel();
         public GanttDiagramViewModel GanttChart { get; set; } = new GanttDiagramViewModel();
+
+
+
+
+        [Reactive]
+        public List<AssignedFileTest> FilesAssigned { get; set; }
+
+        private readonly HttpClientService _httpClient;
+        private readonly SessionService _sessionService;
+        private readonly INavigationService _navigationService;
+
+
+        private PromptPacket _promptPacket { get; set; }
+        private PromptService _promptService { get; set; }
+
+
+
 
 
         public LogTableViewModel(HttpClientService clientService, SessionService sessionService, INavigationService navigationService)
@@ -111,6 +190,14 @@ namespace client.ViewModels
             _httpClient = clientService;
             _sessionService = sessionService;
             _navigationService = navigationService;
+            FilesAssigned = new List<AssignedFileTest>();
+            FilesAssigned.Add(new AssignedFileTest("ttt1"));
+
+            
+
+
+
+
 
             CreateBoardCommand = ReactiveCommand.Create(SwitchToDiagramPage);
             OpenOptionPane = ReactiveCommand.CreateFromTask(OpenPane);
@@ -121,11 +208,18 @@ namespace client.ViewModels
             LastPage = ReactiveCommand.CreateFromTask(ToLastPage);
             FirstPage = ReactiveCommand.CreateFromTask(ToFirstPage);
 
+            LoadLogsCommand = ReactiveCommand.CreateFromTask(LoadLogs);
+            DeleteSessionCommand = ReactiveCommand.CreateFromTask(DeleteSession);
+
+            ApplyClampTrigger = ReactiveCommand.CreateFromTask(ApplyClamp);
 
 
+            LeaveSessionCommand = ReactiveCommand.CreateFromTask(LeaveSession);
             ApplyClampTrigger = ReactiveCommand.CreateFromTask(ApplyClamp);
             LoadLogsCommand = ReactiveCommand.CreateFromTask(LoadLogs);
             DeleteSessionCommand = ReactiveCommand.CreateFromTask(DeleteSession);
+
+            Refresh = ReactiveCommand.CreateFromTask(RefreshPage);
 
 
             DoubleClickCommand = ReactiveCommand.CreateFromTask<ParsedLog>(log =>
@@ -135,18 +229,9 @@ namespace client.ViewModels
 
 
             _parsedLogs = new ObservableCollection<ParsedLog>();
+            
 
-            ParsedLog parsedLog = new ParsedLog("wdawd", "wadadwddddd");
-            ParsedLog parsedLog1 = new ParsedLog("wdawd", "wadadwddddd");
-
-            parsedLog.Message = "dddddddddd";
-            parsedLog.GroupedLogs = new List<ParsedLog>();
-            parsedLog1.Message = "aaaaa";
-            parsedLog1.IsHidden = true;
-            parsedLog.GroupedLogs.Add(parsedLog1);
-
-            _parsedLogs.Add(parsedLog);
-
+            
 
             LogsSource = new HierarchicalTreeDataGridSource<ParsedLog>(_parsedLogs)
             {
@@ -154,7 +239,8 @@ namespace client.ViewModels
                 {
                     new CheckBoxColumn<ParsedLog>("Скрыть", x=>x.IsHidden, (x, value) =>{x.IsHidden = value;  }),
                     new HierarchicalExpanderColumn<ParsedLog>(new TextColumn<ParsedLog, string>("Время", x => x.TimestampStr), x=>x.GroupedLogs),
-                    new TextColumn<ParsedLog, string>("Сообщение", x => x.Message)
+                    new TextColumn<ParsedLog, string>("Сообщение", x => x.Message),
+                    new TextColumn<ParsedLog, string>("Уровень", x => x.Level)
                 },
             };
         }
@@ -169,7 +255,17 @@ namespace client.ViewModels
         public async Task OpenFullInfoPane(ParsedLog log)
         {
             DoubleTappedLog = log;
-            IsFullInfoPaneIsOpen = true;
+            if (log != null)
+            {
+                IsFullInfoPaneIsOpen = true;
+            }
+        }
+
+
+        public async Task RefreshPage()
+        {
+            _parsedLogs = awa _promptService.GetLogsAsync(_promptPacket);
+            
         }
 
 
@@ -177,6 +273,7 @@ namespace client.ViewModels
         public async Task ApplyClamp()
         {
             CurrentPage = Math.Clamp(CurrentPage, 1, MaxPage);
+            _promptPacket.Page = CurrentPage;
         }
 
         public async Task ToNextPage()
@@ -268,6 +365,17 @@ namespace client.ViewModels
                 _sessionService.CloseSession();
                 _navigationService.NavigateTo<LoginView>();
             }
+        }
+        private async Task LeaveSession()
+        {
+            /*
+            var res = await _httpClient.HttpClient.DeleteAsync($"session/delete/{_sessionService.SessionName}");
+
+            if (res.IsSuccessStatusCode)
+            {
+                _sessionService.CloseSession();
+            }*/
+            _navigationService.NavigateTo<LoginView>();
         }
     }
 
