@@ -21,6 +21,7 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.VisualElements;
 using client.Models;
+using client.services;
 
 namespace client.ViewModels
 {
@@ -114,7 +115,9 @@ namespace client.ViewModels
 
 
         private ObservableCollection<ParsedLog> _parsedLogs;
+        private ObservableCollection<LogEntry> _logsFromLogEntry;
         public HierarchicalTreeDataGridSource<ParsedLog> LogsSource { get; }
+        public HierarchicalTreeDataGridSource<LogEntry> EntryLogsSource { get; }
 
 
 
@@ -138,30 +141,17 @@ namespace client.ViewModels
 
 
 
+        private readonly SessionService _sessionService;
 
 
-
-        public LogTableViewModel()
+        public LogTableViewModel(SessionService sessionService)
         {
-
+            _sessionService = sessionService;
             FilesAssigned = new List<AssignedFileTest>();
             FilesAssigned.Add(new AssignedFileTest("ttt1"));
-            FilesAssigned.Add(new AssignedFileTest("ttt2"));
-            FilesAssigned.Add(new AssignedFileTest("ttt3"));
-            FilesAssigned.Add(new AssignedFileTest("ttt4"));
-            FilesAssigned.Add(new AssignedFileTest("ttt4"));
-            FilesAssigned.Add(new AssignedFileTest("ttt4"));
-            FilesAssigned.Add(new AssignedFileTest("ttt4"));
-            FilesAssigned.Add(new AssignedFileTest("ttt4"));
-            FilesAssigned.Add(new AssignedFileTest("ttt4"));
-            FilesAssigned.Add(new AssignedFileTest("ttt4"));
-            FilesAssigned.Add(new AssignedFileTest("ttt4"));
-            FilesAssigned.Add(new AssignedFileTest("ttt4"));
-            FilesAssigned.Add(new AssignedFileTest("ttt4"));
-            FilesAssigned.Add(new AssignedFileTest("ttt4"));
 
 
-
+            
 
 
 
@@ -187,18 +177,22 @@ namespace client.ViewModels
 
 
             _parsedLogs = new ObservableCollection<ParsedLog>();
+            _logsFromLogEntry = new ObservableCollection<LogEntry>();
+            _logsFromLogEntry = _sessionService.Logs;
 
-            ParsedLog parsedLog = new ParsedLog("wdawd", "wadadwddddd");
-            ParsedLog parsedLog1 = new ParsedLog("wdawd", "wadadwddddd");
 
-            parsedLog.Message = "dddddddddd";
-            parsedLog.GroupedLogs = new List<ParsedLog>();
-            parsedLog1.Message = "aaaaa";
-            parsedLog1.IsHidden = true;
-            parsedLog.GroupedLogs.Add(parsedLog1);
 
-            _parsedLogs.Add(parsedLog);
-
+            /*
+            EntryLogsSource = new HierarchicalTreeDataGridSource<LogEntry>(_logsFromLogEntry)
+            {
+                Columns =
+                {
+                    new CheckBoxColumn<LogEntry>("Скрыть", x=>x.IsHidden, (x, value) =>{x.IsHidden = value;  }),
+                    new HierarchicalExpanderColumn<LogEntry>(new TextColumn<LogEntry, string>("Время", x => x.TimeStr), x=>x.GroupedLogs),
+                    new TextColumn<LogEntry, string>("Сообщение", x => x.Content)
+                },
+            };
+            */
 
             LogsSource = new HierarchicalTreeDataGridSource<ParsedLog>(_parsedLogs)
             {

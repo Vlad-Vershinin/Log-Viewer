@@ -7,8 +7,9 @@ namespace client.ViewModels;
 
 public class LogEntry
 {
-    [Reactive] public string IsHidden { get; set; } = string.Empty;
+    [Reactive] public bool IsHidden { get; set; } = false;
     [Reactive] public DateTime Time { get; set; }
+    [Reactive] public string TimeStr { get { return $"{Time.ToShortTimeString()}"; } }
     [Reactive] public string Type { get; set; } = string.Empty;
     [Reactive] public string Content { get; set; } = string.Empty;
 
