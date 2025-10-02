@@ -30,5 +30,6 @@ public class LogsRepository : ILogsRepository
         foreach (ParsedLog log in parsedLogs) {
             await _context.ParsedLogs.AddAsync(log);
         }
+        await _context.SaveChangesAsync();
     }
 }

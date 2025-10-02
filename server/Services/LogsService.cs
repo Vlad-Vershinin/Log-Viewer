@@ -11,7 +11,7 @@ public class LogsService : ILogsService
 
     public LogsService(ILogsRepository logsRepository)
     {
-        this._logsRepository = logsRepository;
+        _logsRepository = logsRepository;
     }
 
     public void Parse(string sessionName, string json_data, string filename)
@@ -32,19 +32,19 @@ public class LogsService : ILogsService
                 {
                     log.Timestamp = Convert.ToDateTime(dict["@timestamp"]);
                     last_time = log.Timestamp;
-                    dict["@timestamp"].Remove();
+                    dict.Remove("@timestamp");
                 } else { log.IsAnomaly = true; log.Timestamp = last_time.AddMicroseconds(1); }
 
                 if (dict.ContainsKey("@level"))
                 {
                     log.Level = dict["@level"].ToString();
-                    dict["@level"].Remove();
+                    dict.Remove("@level");
                 } else { log.IsAnomaly = true; log.Level = "@level missed"; }
 
                 if (dict.ContainsKey("@message"))
                 {
                     log.Message = dict["@message"].ToString();
-                    dict["@message"].Remove();
+                    dict.Remove("@message");
                 } else { log.IsAnomaly = true; log.Message = "@message missed"; }
 
                 if (dict.ContainsKey("tf_req_id"))
@@ -68,8 +68,8 @@ public class LogsService : ILogsService
         _logsRepository.UploadLogsToDBAsync(result);
     }
 
-    public List<ParsedLog> GetLogs(PromptPacket prompts)
+    public async Task<List<ParsedLog>> GetLogs(PromptPacket prompts)
     {
-        return _logsRepository.GetLogsAsync(prompts);
+        return await _logsRepository.GetLogsAsync(prompts);
     }
 }

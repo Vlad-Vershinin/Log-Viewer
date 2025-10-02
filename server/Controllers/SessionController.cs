@@ -29,7 +29,7 @@ public class SessionController : ControllerBase
     }
 
     [HttpDelete("delete")]
-    public async Task<IActionResult> DeleteSession([FromForm] string session)
+    public async Task<IActionResult> DeleteSession([FromBody] string session)
     {
         if (string.IsNullOrWhiteSpace(session))
         {

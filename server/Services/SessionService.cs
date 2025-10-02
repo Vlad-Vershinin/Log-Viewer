@@ -20,7 +20,10 @@ public class SessionService : ISessionService
             return;
         }
 
-        await _sessionRepositry.CreateSessionAsync(userSession);
+        if (!await _sessionRepositry.IfSessionExist(userSession))
+        {
+            await _sessionRepositry.CreateSessionAsync(userSession);
+        }
     }
 
     public async Task DeleteSession(Session userSession)

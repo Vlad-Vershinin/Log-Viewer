@@ -31,4 +31,10 @@ public class SessionRepository : ISessionRepository
     {
         return;
     }
+
+    public async Task<bool> IfSessionExist(Session session)
+    {
+        return await _context.UserSessions
+            .AnyAsync(s => s.SessionName == session.SessionName);
+    }
 }

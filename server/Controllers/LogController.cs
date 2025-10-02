@@ -12,12 +12,32 @@ public class LogController : ControllerBase
 {
     private readonly ILogsService _parserService;
 
+    public LogController(ILogsService parserService)
+    {
+        _parserService = parserService;
+    }
+
     [HttpPost("logs")]
-    public async Task<IActionResult> UploadLogs(FilesPacket dto)
+    public async Task<IActionResult> UploadLogs([FromForm] FilesPacket dto)
     {
         //using var reader = new StreamReader(Request.Body);
         //var body = await reader.ReadToEndAsync();
-        
+
+        if (dto == null)
+        {
+            return BadRequest("DTO is null");
+        }
+
+        if (dto.Files == null || !dto.Files.Any())
+        {
+            return BadRequest("No files provided");
+        }
+
+        if (string.IsNullOrEmpty(dto.SessionName))
+        {
+            return BadRequest("Session name is required");
+        }
+
         foreach (IFormFile file in dto.Files)
         {
             var result = new StringBuilder();
@@ -35,6 +55,6 @@ public class LogController : ControllerBase
     [HttpGet("logs")]
     public async Task<List<ParsedLog>> GetLogs(PromptPacket dto)
     {
-        return _parserService.GetLogs(dto);
+        return await _parserService.GetLogs(dto);
     }
 }

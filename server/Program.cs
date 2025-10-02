@@ -16,6 +16,7 @@ public class Program
         builder.Services.AddTransient<ILogsService, LogsService>();
         builder.Services.AddTransient<ISessionRepository, SessionRepository>();
         builder.Services.AddTransient<ISessionService, SessionService>();
+        builder.Services.AddTransient<ILogsRepository, LogsRepository>();
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlite("Data Source=logdb.db"));
