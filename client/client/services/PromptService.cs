@@ -32,8 +32,7 @@ namespace client.services
                         $"&ShowHidden={packet.ShowHidden}" +
                         $"&PartialComparing={packet.PartialComparing}" +
                         $"&SearchPrompt={packet.SearchPrompt}" +
-                        $"&LevelFilter={packet.LevelFilter}" +
-                        $"&TypeFilter={packet.TypeFilter}";
+                        $"&LevelFilter={packet.LevelFilter}";
 
             var response = await _httpClient.GetAsync($"logs/logs/{query}");
             response.EnsureSuccessStatusCode();
