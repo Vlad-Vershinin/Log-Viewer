@@ -13,7 +13,6 @@ namespace client.ViewModels
 {
     public class TextColorConverter : IValueConverter
     {
-        private readonly INavigationService _navigationService;
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -32,12 +31,6 @@ namespace client.ViewModels
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotSupportedException();
-        }
-
-
-        public TextColorConverter(INavigationService navigationService)
-        {
-            _navigationService = navigationService;
         }
     }
 }
