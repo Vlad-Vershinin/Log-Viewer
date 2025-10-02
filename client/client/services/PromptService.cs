@@ -31,7 +31,9 @@ namespace client.services
                         $"&LogsPerPage={packet.LogsPerPage}" +
                         $"&ShowHidden={packet.ShowHidden}" +
                         $"&PartialComparing={packet.PartialComparing}" +
-                        $"&SearchPrompt={packet.SearchPrompt}";
+                        $"&SearchPrompt={packet.SearchPrompt}" +
+                        $"&LevelFilter={packet.LevelFilter}" +
+                        $"&TypeFilter={packet.TypeFilter}";
 
             var response = await _httpClient.GetAsync($"logs/logs{query}");
             response.EnsureSuccessStatusCode();
