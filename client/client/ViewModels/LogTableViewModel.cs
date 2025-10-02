@@ -151,6 +151,10 @@ namespace client.ViewModels
         [Reactive]
         public List<AssignedFileTest> FilesAssigned { get; set; }
 
+        private readonly HttpClientService _httpClient;
+        private readonly SessionService _sessionService;
+        private readonly INavigationService _navigationService;
+
         public LogTableViewModel(HttpClientService clientService, SessionService sessionService, INavigationService navigationService)
         {
             _httpClient = clientService;

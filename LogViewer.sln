@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решен
 		client\client\ViewLocator.cs = client\client\ViewLocator.cs
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrpcService", "GrpcService\GrpcService.csproj", "{566E3A77-840B-4D97-ACFD-941251F23DD0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,18 @@ Global
 		{781483B9-BE6F-4745-BBC6-64B1D22AA768}.Release|x64.Build.0 = Release|Any CPU
 		{781483B9-BE6F-4745-BBC6-64B1D22AA768}.Release|x86.ActiveCfg = Release|Any CPU
 		{781483B9-BE6F-4745-BBC6-64B1D22AA768}.Release|x86.Build.0 = Release|Any CPU
+		{566E3A77-840B-4D97-ACFD-941251F23DD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{566E3A77-840B-4D97-ACFD-941251F23DD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{566E3A77-840B-4D97-ACFD-941251F23DD0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{566E3A77-840B-4D97-ACFD-941251F23DD0}.Debug|x64.Build.0 = Debug|Any CPU
+		{566E3A77-840B-4D97-ACFD-941251F23DD0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{566E3A77-840B-4D97-ACFD-941251F23DD0}.Debug|x86.Build.0 = Debug|Any CPU
+		{566E3A77-840B-4D97-ACFD-941251F23DD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{566E3A77-840B-4D97-ACFD-941251F23DD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{566E3A77-840B-4D97-ACFD-941251F23DD0}.Release|x64.ActiveCfg = Release|Any CPU
+		{566E3A77-840B-4D97-ACFD-941251F23DD0}.Release|x64.Build.0 = Release|Any CPU
+		{566E3A77-840B-4D97-ACFD-941251F23DD0}.Release|x86.ActiveCfg = Release|Any CPU
+		{566E3A77-840B-4D97-ACFD-941251F23DD0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
