@@ -44,7 +44,7 @@ public class LogsService : ILogsService
                         log.Level = dict["@level"].ToString();
                         dict.Remove("@level");
                     }
-                    else { log.IsAnomaly = true; log.Level = "@level missed"; }
+                    else { log.IsAnomaly = true; log.Level = "missed"; }
 
                     if (dict.ContainsKey("@message"))
                     {
@@ -65,7 +65,7 @@ public class LogsService : ILogsService
 
             result.Add(log);
         }
-        _logsRepository.UploadLogsToDBAsync(result, apply_entries >= plan_entries);
+        _logsRepository.UploadLogsToDBAsync(result, apply_entries > plan_entries);
     }
 
     /*
