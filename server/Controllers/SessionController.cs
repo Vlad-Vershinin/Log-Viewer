@@ -28,15 +28,15 @@ public class SessionController : ControllerBase
         return Ok();
     }
 
-    [HttpDelete("delete")]
-    public async Task<IActionResult> DeleteSession([FromBody] string session)
+    [HttpDelete("delete/{sessionName}")]
+    public async Task<IActionResult> DeleteSession(string sessionName)
     {
-        if (string.IsNullOrWhiteSpace(session))
+        if (string.IsNullOrWhiteSpace(sessionName))
         {
             return BadRequest("Session name is empty");
         }
 
-        await _sessionService.DeleteSession(new Session { SessionName = session });
+        await _sessionService.DeleteSession(new Session { SessionName = sessionName });
         return Ok();
     }
 }

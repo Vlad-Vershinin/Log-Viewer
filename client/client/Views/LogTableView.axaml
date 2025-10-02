@@ -112,10 +112,9 @@
 				<Border Background="#0e004e">
 					<Border Margin="5" Background="#0d0035">
 						<StackPanel>
-							<Button Content="Имрорт логов (*.json | *.txt)" Background="Transparent" HorizontalAlignment="Stretch"></Button>
-							<CheckBox Content="Показ скрытых элементов" Margin="8,0,0,0"></CheckBox>
-							<CheckBox Content="Поиск по частичному совпадению" Margin="8,0,0,0"></CheckBox>
-							<Button Content="Выйти из сессии" Foreground="#ffb9c4" Background="Transparent" HorizontalAlignment="Stretch"></Button>
+							<Button Content="Имрорт логов (*.json | *.txt)" HorizontalAlignment="Stretch" Command="{Binding LoadLogsCommand}"></Button>
+							<Button Content="Параметры" HorizontalAlignment="Stretch"></Button>
+							<Button Content="Выйти из сессии" HorizontalAlignment="Stretch" Command="{Binding DeleteSessionCommand}"></Button>
 						</StackPanel>
 					</Border>
 				</Border>

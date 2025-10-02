@@ -29,7 +29,7 @@ public class LoginViewModel : ViewModelBase
 
     private async Task Login()
     {
-        var res = await _httpClient._HttpClient.PostAsync($"session/connect/{SessionName}", null);
+        var res = await _httpClient.HttpClient.PostAsync($"session/connect/{SessionName}", null);
 
         if(res.IsSuccessStatusCode)
         {
