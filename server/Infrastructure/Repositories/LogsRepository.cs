@@ -48,7 +48,7 @@ public class LogsRepository : ILogsRepository
             .ToListAsync();
     }
 
-    public async Task UploadLogsToDBAsync(List<ParsedLog> parsedLogs)
+    public async Task UploadLogsToDBAsync(List<ParsedLog> parsedLogs, bool isApply)
     {
         foreach (ParsedLog log in parsedLogs) { log.Filename = (isApply ? "[apply] " : "[plan] ") + log.Filename; }
 
