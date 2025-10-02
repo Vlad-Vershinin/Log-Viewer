@@ -2,19 +2,25 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using client.ViewModels;
-using ReactiveUI;
-using System;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace client.Views;
 
 public partial class LogTableView : UserControl
 {
+    private LogTableViewModel logTableViewModel = App.ServiceProvider.GetService<LogTableViewModel>();
     public LogTableView()
     {
         InitializeComponent();
-        DataContext = new LogTableViewModel();
-		  
-    }    
-}
+        DataContext = logTableViewModel;
+        LogGrid.DoubleTapped += (s, e) =>
+        {
+            if (LogGrid.RowSelection != null)
+            {
+                logTableViewModel.DoubleClickCommand.Execute((ParsedLog)LogGrid.RowSelection.SelectedItem);
+            }
+        };
 
 
+    }	  
+}    

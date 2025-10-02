@@ -19,13 +19,16 @@ namespace client.ViewModels.Charts
                 Values = new double[] { 100,3,3,3,5,5,6,88,7 },
                 Fill=null
             }
+            
         };
+
         public LabelVisual Title { get; set; } = new LabelVisual()
         {
             Text = "Titttleee",
             TextSize = 20,
             Padding = new LiveChartsCore.Drawing.Padding(5),
-            Paint = new SolidColorPaint(SKColors.LightBlue)
+            Paint = new SolidColorPaint(SKColors.White)
         };
+
     }
 }

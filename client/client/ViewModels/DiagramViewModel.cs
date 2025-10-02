@@ -28,5 +28,6 @@ namespace client.ViewModels
             _navigationService = navigationService;
         }
         public TestChartViewModel TestChart { get; set; } = new TestChartViewModel();
+        public GanttDiagramViewModel GanttChart { get; set; } = new GanttDiagramViewModel();
     }
 }
