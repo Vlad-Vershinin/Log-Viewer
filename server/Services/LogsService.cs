@@ -51,6 +51,9 @@ public class LogsService : ILogsService
                         log.Message = dict["@message"].ToString();
                         if (log.Message.ToLower().Contains("plan")) plan_entries++;
                         if (log.Message.ToLower().Contains("apply")) apply_entries++;
+                        if (log.Message.ToLower().Contains("error") ||
+                            log.Message.ToLower().Contains("exception") ||
+                            log.Message.ToLower().Contains("fail")) log.IsAnomaly = true;
                         dict.Remove("@message");
                     }
                     else { log.IsAnomaly = true; log.Message = "@message missed"; }
