@@ -12,5 +12,6 @@ public class PromptPacket
     public int Page { get; set; } // Запрашиваемая страница
     public int LogsPerPage { get; set; } // Количество логов на одну страницу datagrid
     public bool ShowHidden { get; set; } // Показать скрытые логи
+    public bool PartialComparing { get; set; } // Включить поиск по частичному совпадению
     public string SearchPrompt { get; set; } // Всетекстовой поиск по частичному совпадению с этим промптом
 }
