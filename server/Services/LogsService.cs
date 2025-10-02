@@ -41,7 +41,7 @@ public class LogsService : ILogsService
 
                     if (dict.ContainsKey("@level"))
                     {
-                        log.Level = dict["@level"].ToString();
+                        log.Level = dict["@level"].ToString().ToLower();
                         dict.Remove("@level");
                     }
                     else { log.IsAnomaly = true; log.Level = "missed"; }
