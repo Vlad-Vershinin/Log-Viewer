@@ -264,8 +264,16 @@ namespace client.ViewModels
 
         public async Task RefreshPage()
         {
-            
-            
+            try
+            {
+
+                _promptService.GetLogsAsync(_promptPacket);
+                if (_promptService.Logs != null)
+                {
+                    _parsedLogs = _promptService.Logs;
+                }
+            }
+            catch { }
         }
 
 

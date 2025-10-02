@@ -87,7 +87,7 @@
 					<TextBox Margin="0,5,0,5" Text="{Binding CurrentPage, Mode=TwoWay}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"></TextBox>
 					<Button Margin="5,5,0,5" Command="{Binding NextPage}"> <Image Source="avares://client/Assets/ArrowRight.png" Height="20"/> </Button>
 					<Button Margin="0,5,0,5"  Command="{Binding LastPage}"> <Image Source="avares://client/Assets/ArrowRightGreat.png" Height="20"/> </Button>
-					<Button Content="Обновить"  Background="Green" Margin="5" Command="{Binding CreateBoardCommand}"></Button>
+					<Button Content="Обновить"  Background="Green" Margin="5" Command="{Binding Refresh}"></Button>
 					<Button Margin="5" Command="{Binding OpenOptionPane}">
 						<Image Source="avares://client/Assets/Additional.png" Height="20"/>
 					</Button>
