@@ -284,6 +284,7 @@ namespace client.ViewModels
                     }
                 }
             }
+            catch { }
 
 
 
