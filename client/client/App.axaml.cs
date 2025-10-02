@@ -33,7 +33,6 @@ namespace client
 
             services.AddSingleton<ISessionService>(SessionService.Instance);
 
-
             _serviceProvider = services.BuildServiceProvider();
             ServiceProvider = _serviceProvider;
 

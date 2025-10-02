@@ -1,3 +1,10 @@
+using Microsoft.EntityFrameworkCore;
+using server.Core.Interfaces.Repositories;
+using server.Core.Interfaces.Services;
+using server.Infrastructure.Data;
+using server.Infrastructure.Repositories;
+using server.Services;
+
 namespace server;
 
 public class Program
@@ -6,6 +13,13 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Services.AddTransient<ILogsService, LogsService>();
+        builder.Services.AddTransient<ISessionRepository, SessionRepository>();
+        builder.Services.AddTransient<ISessionService, SessionService>();
+        builder.Services.AddTransient<ILogsRepository, LogsRepository>();
+
+        builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlite("Data Source=logdb.db"));
         builder.Services.AddControllers();
 
         builder.Services.AddCors(options =>

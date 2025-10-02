@@ -13,8 +13,9 @@ public partial class LogTableView : UserControl
     {
         InitializeComponent();
         DataContext = new LogTableViewModel();
-		
-    }
-
+		  
+    }    
     
 }
+
+

@@ -1,66 +1,27 @@
 ﻿using client.services.interfaces;
 using client.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
+using System;
+using System.Collections.ObjectModel;
 
-namespace client.services
+namespace client.services;
+
+public class SessionService
 {
-    public class SessionService : ReactiveObject, ISessionService
+    [Reactive] public string SessionName { get; set; } = string.Empty;
+
+    public ObservableCollection<LogEntry>? Logs { get; set; } = [];
+
+    public void Init(string sessionName)
     {
-        private static readonly SessionService _instance = new SessionService();
-        public static SessionService Instance => _instance;
+        SessionName = sessionName;
+        Logs?.Clear();
+    }
 
-        public SessionService Instance => _instance.Value;
-
-        private string _sessionName;
-        public string SessionName
-        {
-            get => _sessionName;
-            set => this.RaiseAndSetIfChanged(ref _sessionName, value);
-        }
-
-        private readonly ObservableCollection<LogEntry> _logs;
-        public ReadOnlyObservableCollection<LogEntry> Logs { get; }
-
-        private SessionService()
-        {
-            _logs = new ObservableCollection<LogEntry>();
-            Logs = new ReadOnlyObservableCollection<LogEntry>(_logs);
-        }
-
-        public void InitializeSession(string sessionName)
-        {
-            SessionName = sessionName;
-            _logs.Clear();
-        }
-
-        public void AddLog(LogEntry logEntry)
-        {
-            _logs.Add(logEntry);
-        }
-
-        public void AddLogs(IEnumerable<LogEntry> logEntries)
-        {
-            foreach (var log in logEntries)
-            {
-                _logs.Add(log);
-            }
-        }
-
-        public void ClearLogs()
-        {
-            _logs.Clear();
-        }
-
-        public void EndSession()
-        {
-            SessionName = string.Empty;
-            _logs.Clear();
-        }
+    public void CloseSession()
+    {
+        SessionName = string.Empty;
+        Logs?.Clear();
     }
 }
