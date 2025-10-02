@@ -49,12 +49,26 @@ public class LogController : ControllerBase
             _parserService.Parse(dto.SessionName, result.ToString(), file.FileName);
         }
 
-        return Ok();
+        var fileNames = _parserService.GetLogsFileNameAsync(new Session { SessionName = dto.SessionName });
+
+        return Ok(fileNames);
     }
 
     [HttpGet("logs")]
     public async Task<List<ParsedLog>> GetLogs(PromptPacket dto)
     {
         return await _parserService.GetLogs(dto);
+    }
+
+    [HttpGet("getfilename/{sessionName}")]
+    public async Task<IActionResult> GetFileNames(string sessionName)
+    {
+        if (string.IsNullOrEmpty(sessionName))
+        {
+            return BadRequest("Session name is empty");
+        }
+
+        return Ok(await _parserService
+            .GetLogsFileNameAsync(new Session { SessionName = sessionName }));
     }
 }

@@ -72,4 +72,9 @@ public class LogsService : ILogsService
     {
         return await _logsRepository.GetLogsAsync(prompts);
     }
+
+    public async Task<List<string>> GetLogsFileNameAsync(Session session)
+    {
+        return await _logsRepository.GetLogsFileName(session);
+    }
 }

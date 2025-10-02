@@ -25,6 +25,15 @@ public class LogsRepository : ILogsRepository
         return res ?? new List<ParsedLog>();
     }
 
+    public async Task<List<string>> GetLogsFileName(Session session)
+    {
+        return await _context.ParsedLogs
+            .Where(pl => pl.SessionName == session.SessionName)
+            .Select(pl => pl.Filename)
+            .Distinct()
+            .ToListAsync();
+    }
+
     public async Task UploadLogsToDBAsync(List<ParsedLog> parsedLogs)
     {
         foreach (ParsedLog log in parsedLogs) {

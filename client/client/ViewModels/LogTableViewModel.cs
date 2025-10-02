@@ -161,7 +161,7 @@ namespace client.ViewModels
 
 
             
-        }
+        
 
 
 
@@ -254,6 +254,9 @@ namespace client.ViewModels
             }
 
             var response = await _httpClient.HttpClient.PostAsync("log/logs", content);
+
+            var fileNamesList = await response.Content.ReadFromJsonAsync<List<string>>();
+            _sessionService.FileNames = new ObservableCollection<string>(fileNamesList ?? new List<string>());
         }
 
         private async Task DeleteSession()
