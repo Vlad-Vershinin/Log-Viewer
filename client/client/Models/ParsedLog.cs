@@ -7,9 +7,6 @@ using System.ComponentModel.DataAnnotations;
 
 public class ParsedLog
 {
-
-
-
     public ParsedLog() { }
     public ParsedLog(string filename, string rawJSON)
     {

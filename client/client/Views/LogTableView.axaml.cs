@@ -28,3 +28,5 @@ public partial class LogTableView : UserControl
 
 }
 
+
+

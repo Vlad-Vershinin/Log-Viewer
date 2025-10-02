@@ -36,12 +36,12 @@ public class LoginViewModel : ViewModelBase
 
         if(res.IsSuccessStatusCode)
         {
+            _sessionService.Init(SessionName);
             var response = await _httpClient.HttpClient.GetAsync($"log/getfilename/{_sessionService.SessionName}");
 
             var fileNamesList = await response.Content.ReadFromJsonAsync<List<string>>();
             _sessionService.FileNames = new ObservableCollection<string>(fileNamesList ?? new List<string>());
 
-            _sessionService.Init(SessionName);
             _navigationService.NavigateTo<LogTableView>();
         }
     }

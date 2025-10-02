@@ -161,6 +161,8 @@ namespace client.ViewModels
             _httpClient = clientService;
             _sessionService = sessionService;
             _navigationService = navigationService;
+            FilesAssigned = new List<AssignedFileTest>();
+            FilesAssigned.Add(new AssignedFileTest("ttt1"));
 
 
             
@@ -184,6 +186,9 @@ namespace client.ViewModels
 
 
             LeaveSessionCommand = ReactiveCommand.CreateFromTask(LeaveSession);
+            ApplyClampTrigger = ReactiveCommand.CreateFromTask(ApplyClamp);
+            LoadLogsCommand = ReactiveCommand.CreateFromTask(LoadLogs);
+            DeleteSessionCommand = ReactiveCommand.CreateFromTask(DeleteSession);
 
 
             DoubleClickCommand = ReactiveCommand.CreateFromTask<ParsedLog>(log =>

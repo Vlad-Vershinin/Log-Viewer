@@ -41,6 +41,7 @@ public partial class App : Application
 
         // add windows
         services.AddSingleton<MainWindow>();
+            services.AddSingleton<SessionService>();
 
         _serviceProvider = services.BuildServiceProvider();
         ServiceProvider = _serviceProvider;
