@@ -185,18 +185,19 @@ namespace client.ViewModels
 
 
 
+
+
         public LogTableViewModel(HttpClientService clientService, SessionService sessionService, INavigationService navigationService)
         {
             _httpClient = clientService;
             _sessionService = sessionService;
             _navigationService = navigationService;
             FilesAssigned = new List<AssignedFileTest>();
-            FilesAssigned.Add(new AssignedFileTest("ttt1"));
+
+
 
             
-
-
-
+            
 
 
             CreateBoardCommand = ReactiveCommand.Create(SwitchToDiagramPage);
@@ -264,6 +265,28 @@ namespace client.ViewModels
 
         public async Task RefreshPage()
         {
+
+            try
+            {
+                var response = await _httpClient.HttpClient.GetAsync($"logs/getFileName/{_promptPacket.SessionName}");
+                response.EnsureSuccessStatusCode();
+
+
+
+
+                var files = await response.Content.ReadFromJsonAsync<List<string>>();
+                FilesAssigned?.Clear();
+                if (files != null)
+                {
+                    foreach (var file in files)
+                    {
+                        FilesAssigned?.Add(new AssignedFileTest("file"));
+                    }
+                }
+            }
+
+
+
             try
             {
 
