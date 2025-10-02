@@ -21,8 +21,8 @@ namespace client.services
             _httpClient = httpClient;
         }
 
-
-        public async Task<List<ParsedLog>> GetLogsAsync(PromptPacket packet)
+        
+        public async Task GetLogsAsync(PromptPacket packet)
         {
             var query = $"?SessionName={packet.SessionName}" +
                         $"&Filename={packet.Filename}" +
@@ -35,7 +35,7 @@ namespace client.services
                         $"&LevelFilter={packet.LevelFilter}" +
                         $"&TypeFilter={packet.TypeFilter}";
 
-            var response = await _httpClient.GetAsync($"logs/logs{query}");
+            var response = await _httpClient.GetAsync($"logs/logs/{query}");
             response.EnsureSuccessStatusCode();
 
             var logs = await response.Content.ReadFromJsonAsync<List<LogEntry>>();
@@ -47,7 +47,7 @@ namespace client.services
                     Logs?.Add(log);
                 }
             }
-
         }
+        
     }
 }

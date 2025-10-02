@@ -45,10 +45,7 @@ namespace client.ViewModels
 
         private void Login()
         {
-            if (!string.IsNullOrWhiteSpace(SessionName))
-            {
-                SessionService.Instance.InitializeSession(SessionName);
-            }
+            
         }
     }
 }

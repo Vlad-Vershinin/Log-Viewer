@@ -84,8 +84,7 @@ namespace client.ViewModels
 
 
 
-        [Reactive]
-        public string SearchPrompt { get; set; } = string.Empty;
+       
 
 
 
@@ -98,7 +97,7 @@ namespace client.ViewModels
         public bool IsOptionPaneIsOpen { get; set; } = false;
 
         [Reactive]
-        public bool IsFullInfoPaneIsOpen { get; set; } = false;
+        public bool IsFullInfoPaneIsOpen { get; set; } = true;
 
 
 
@@ -119,6 +118,10 @@ namespace client.ViewModels
 
         private ObservableCollection<ParsedLog> _parsedLogs;
         public HierarchicalTreeDataGridSource<ParsedLog> LogsSource { get; }
+
+
+
+
 
 
 
@@ -212,11 +215,15 @@ namespace client.ViewModels
 
 
 
-
-
-
-
             
+
+
+
+
+
+
+
+
         }
 
 

@@ -126,14 +126,36 @@
 			<SplitView.Pane>
 				<Border Background="#000a2c">
 					<Border Margin="5">
-						<Grid>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition></ColumnDefinition>
-								<ColumnDefinition></ColumnDefinition>
-							</Grid.ColumnDefinitions>
 
-							<TextBlock DataContext="{Binding DoubleTappedLog}" Text="{Binding Message}"></TextBlock>
-						</Grid>
+
+
+						<ScrollViewer DataContext="{Binding DoubleTappedLog}" VerticalScrollBarVisibility="Visible">
+							<StackPanel>
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="100"></ColumnDefinition>
+									<ColumnDefinition></ColumnDefinition>
+								</Grid.ColumnDefinitions>
+
+								<StackPanel>
+									<TextBlock Margin="5" Text="Время :"></TextBlock>
+									<TextBlock Margin="5"  Text="Сообщение :"></TextBlock>
+									<TextBlock Margin="5"  Text="Уровень :"></TextBlock>
+								</StackPanel>
+								<StackPanel Grid.Column="1">
+									<TextBlock Margin="5" Text="{Binding Timestamp}"></TextBlock>
+									<TextBlock Margin="5"  Text="{Binding Message}"></TextBlock>
+									<TextBlock Margin="5"  Text="{Binding Level}"></TextBlock>
+									
+								</StackPanel>
+							</Grid>
+								<Expander Margin="5">
+									<Expander.Header>
+										<TextBlock Text="Другие свойства"></TextBlock>
+									</Expander.Header>
+								</Expander>
+							</StackPanel>
+						</ScrollViewer>
 					</Border>
 				</Border>
 			</SplitView.Pane>

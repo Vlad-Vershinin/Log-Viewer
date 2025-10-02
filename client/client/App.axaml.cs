@@ -31,7 +31,7 @@ namespace client
             services.AddTransient<DiagramViewModel>();
             services.AddTransient<LoginViewModel>();
 
-            services.AddSingleton<ISessionService>(SessionService.Instance);
+            services.AddSingleton<SessionService>();
 
             _serviceProvider = services.BuildServiceProvider();
             ServiceProvider = _serviceProvider;
