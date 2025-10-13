@@ -8,7 +8,7 @@ namespace client.services;
 public class SessionService
 {
     [Reactive] public string SessionName { get; set; } = string.Empty;
-    public ObservableCollection<ParsedLog>? Logs { get; set; } = [];
+    public ObservableCollection<TextColour>? Logs { get; set; } = [];
     public ObservableCollection<string> FileNames { get; set; } = [];
 
     public void Init(string sessionName)

@@ -10,9 +10,9 @@ namespace client.services.interfaces
     public interface ISessionService
     {
         void InitializeSession(string sessionName);
-        public void AddLogs(IEnumerable<ParsedLog> logEntries);
+        public void AddLogs(IEnumerable<TextColour> logEntries);
         public void ClearLogs();
         public void EndSession();
-        public void AddLog(ParsedLog logEntry);
+        public void AddLog(TextColour logEntry);
     }
 }
