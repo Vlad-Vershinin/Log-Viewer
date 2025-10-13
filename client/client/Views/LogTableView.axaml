@@ -29,7 +29,7 @@
 
 		<DockPanel>
 			<StackPanel DockPanel.Dock="Top" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
-				<TextBox Margin="5" DataContext="{Binding _promptPacket}" Text="{Binding SearchPrompt, Mode=TwoWay}" VerticalAlignment="Bottom" Watermark="Поиск"></TextBox>
+				<TextBox Margin="5" DataContext="{Binding PromptPacket}" Text="{Binding SearchPrompt, Mode=TwoWay}" VerticalAlignment="Bottom" Watermark="Поиск"></TextBox>
 			</StackPanel>
 			<ScrollViewer Background="#000a2c" Grid.Row="0" Margin="5">
 				<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -113,8 +113,8 @@
 					<Border Margin="5" Background="#0d0035">
 						<StackPanel>
 							<Button Content="Имрорт логов (*.json | *.txt)" Command="{Binding LoadLogsCommand}" Background="Transparent" HorizontalAlignment="Stretch"></Button>
-							<CheckBox DataContext="{Binding _promptPacket}" IsChecked="{Binding ShowHidden}" Content="Показ скрытых элементов" Margin="8,0,0,0"></CheckBox>
-							<CheckBox DataContext="{Binding _promptPacket}"  IsChecked="{Binding PartialComparing}" Content="Поиск по частичному совпадению" Margin="8,0,0,0"></CheckBox>
+							<CheckBox DataContext="{Binding PromptPacket}" IsChecked="{Binding ShowHidden}" Content="Показ скрытых элементов" Margin="8,0,0,0"></CheckBox>
+							<CheckBox DataContext="{Binding PromptPacket}"  IsChecked="{Binding PartialComparing}" Content="Поиск по частичному совпадению" Margin="8,0,0,0"></CheckBox>
 							<Button Content="Выйти из сессии" Foreground="#ffb9c4" Command="{Binding LeaveSessionCommand}" Background="Transparent" HorizontalAlignment="Stretch"></Button>
 							<Button Content="Прервать и очистить сессию из сессии" Foreground="#ffb9c4" Command="{Binding DeleteSessionCommand}" Background="Transparent" HorizontalAlignment="Stretch"></Button>
 						</StackPanel>

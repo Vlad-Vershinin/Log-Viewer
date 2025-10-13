@@ -1,44 +1,25 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.Models.TreeDataGrid;
-using Avalonia.Layout;
-using Avalonia.Media;
 using Avalonia.Platform.Storage;
 using client.services;
 using client.services.interfaces;
 using client.ViewModels.Charts;
 using client.Views;
-using LiveChartsCore.SkiaSharpView;
-using LiveChartsCore.SkiaSharpView.Painting;
-using LiveChartsCore.SkiaSharpView.VisualElements;
 using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using Splat.ModeDetection;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Reactive;
-using System.Reactive.Joins;
-using System.Text;
 using System.Threading.Tasks;
-
-
-
-
-using LiveChartsCore.SkiaSharpView;
-using LiveChartsCore.SkiaSharpView.Painting;
-using LiveChartsCore.SkiaSharpView.VisualElements;
 using client.Models;
-using client.services;
 
 namespace client.ViewModels
 {
-
-
     public class LogTableViewModel : ViewModelBase
     {
         // commands for DataGrid
@@ -70,31 +51,10 @@ namespace client.ViewModels
         public string LevelFilter { get; set; } = string.Empty;
 
 
-        public void AllignPromptPacket()
-        {
-            _promptPacket.SessionName = SessionName;
-            _promptPacket.Filename = Filename;
-            _promptPacket.Page = Page;
-            _promptPacket.LogsPerPage = LogsPerPage;
-            _promptPacket.ShowHidden = ShowHidden;
-            _promptPacket.PartialComparing = PartialComparing;
-            _promptPacket.SearchPrompt = SearchPrompt;
-            _promptPacket.LevelFilter = LevelFilter;
-        }
-
-
-
-
-
-
-
-
         // other commands
         public ReactiveCommand<Unit, Unit> CreateBoardCommand { get; set; }
         public ReactiveCommand<Unit, Unit> OpenOptionPane { get; set; }
         
-
-
 
         public ReactiveCommand<Unit, Unit> NextPage { get; set; }
         public ReactiveCommand<Unit, Unit> PreviousPage { get; set; }
@@ -110,7 +70,6 @@ namespace client.ViewModels
         public ReactiveCommand<Unit, Unit> ApplyClampTrigger { get; set; }
 
 
-
         public ReactiveCommand<Unit, Unit> Refresh { get; set; }
 
 
@@ -120,24 +79,11 @@ namespace client.ViewModels
         public int MaxPage { get; set; } = 100;
 
 
-
-       
-
-
-
-
-
-
-
-
         [Reactive]
         public bool IsOptionPaneIsOpen { get; set; } = false;
 
         [Reactive]
         public bool IsFullInfoPaneIsOpen { get; set; } = false;
-
-
-
 
 
         [Reactive]
@@ -150,24 +96,13 @@ namespace client.ViewModels
         public ReactiveCommand<ParsedLog, Unit> DoubleClickCommand { get; }
 
 
-
-
-
         private ObservableCollection<ParsedLog> _parsedLogs;
         public HierarchicalTreeDataGridSource<ParsedLog> LogsSource { get; }
-
-
-
-
-
-
 
 
         // Charts
         public TestChartViewModel TestChart { get; set; } = new TestChartViewModel();
         public GanttDiagramViewModel GanttChart { get; set; } = new GanttDiagramViewModel();
-
-
 
 
         [Reactive]
@@ -181,9 +116,7 @@ namespace client.ViewModels
         private PromptPacket _promptPacket { get; set; }
         private PromptService _promptService { get; set; }
 
-
-
-
+        public PromptPacket PromptPacket => _promptPacket;
 
         public LogTableViewModel(HttpClientService clientService, SessionService sessionService, INavigationService navigationService)
         {
@@ -192,11 +125,6 @@ namespace client.ViewModels
             _navigationService = navigationService;
             FilesAssigned = new List<AssignedFileTest>();
             FilesAssigned.Add(new AssignedFileTest("ttt1"));
-
-            
-
-
-
 
 
             CreateBoardCommand = ReactiveCommand.Create(SwitchToDiagramPage);
@@ -227,10 +155,7 @@ namespace client.ViewModels
             );
 
 
-
             _parsedLogs = new ObservableCollection<ParsedLog>();
-            
-
             
 
             LogsSource = new HierarchicalTreeDataGridSource<ParsedLog>(_parsedLogs)
@@ -246,10 +171,17 @@ namespace client.ViewModels
         }
 
 
-            
-        
-
-
+        public void AllignPromptPacket()
+        {
+            _promptPacket.SessionName = SessionName;
+            _promptPacket.Filename = Filename;
+            _promptPacket.Page = Page;
+            _promptPacket.LogsPerPage = LogsPerPage;
+            _promptPacket.ShowHidden = ShowHidden;
+            _promptPacket.PartialComparing = PartialComparing;
+            _promptPacket.SearchPrompt = SearchPrompt;
+            _promptPacket.LevelFilter = LevelFilter;
+        }
 
 
         public async Task OpenFullInfoPane(ParsedLog log)
@@ -261,14 +193,11 @@ namespace client.ViewModels
             }
         }
 
-
         public async Task RefreshPage()
         {
             
             
         }
-
-
 
         public async Task ApplyClamp()
         {
@@ -281,38 +210,35 @@ namespace client.ViewModels
             CurrentPage++;
             ApplyClamp();
         }
+
         public async Task ToPreviousPage()
         {
             CurrentPage--;
             ApplyClamp();
         }
+
         public async Task ToLastPage()
         {
             CurrentPage++;
             ApplyClamp();
 
         }
+
         public async Task ToFirstPage()
         {
             CurrentPage = 1;
             ApplyClamp();
         }
 
-
-
-
-
-
-
         private async Task OpenPane()
         {
             IsOptionPaneIsOpen = true;
         }
+
         private void SwitchToDiagramPage()
         {
             // Blank
         }
-
 
         private async Task LoadLogs()
         {
@@ -338,7 +264,6 @@ namespace client.ViewModels
 
             if (files == null || !files.Any())
                 return;
-
 
             using var content = new MultipartFormDataContent();
 
@@ -366,15 +291,9 @@ namespace client.ViewModels
                 _navigationService.NavigateTo<LoginView>();
             }
         }
+
         private async Task LeaveSession()
         {
-            /*
-            var res = await _httpClient.HttpClient.DeleteAsync($"session/delete/{_sessionService.SessionName}");
-
-            if (res.IsSuccessStatusCode)
-            {
-                _sessionService.CloseSession();
-            }*/
             _navigationService.NavigateTo<LoginView>();
         }
     }

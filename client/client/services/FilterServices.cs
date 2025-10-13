@@ -29,28 +29,28 @@ namespace client.services
                 query = query.Where(x => !x.IsHidden);
 
             // Фильтр по поисковой строке
-            if (!string.IsNullOrWhiteSpace(searchPrompt))
-            {
-                if (partialComparing)
-                    query = query.Where(x => x.Message?.Contains(searchPrompt, StringComparison.OrdinalIgnoreCase) == true);
-                else
-                    query = query.Where(x => string.Equals(x.Message, searchPrompt, StringComparison.OrdinalIgnoreCase));
-            }
+            //if (!string.IsNullOrWhiteSpace(searchPrompt))
+            //{
+            //    if (partialComparing)
+            //        query = query.Where(x => x.Message?.Contains(searchPrompt, StringComparison.OrdinalIgnoreCase) == true);
+            //    else
+            //        query = query.Where(x => string.Equals(x.Message, searchPrompt, StringComparison.OrdinalIgnoreCase));
+            //}
 
             // Фильтр по имени файла
             if (!string.IsNullOrWhiteSpace(filename))
                 query = query.Where(x => string.Equals(x.Filename, filename, StringComparison.OrdinalIgnoreCase));
 
             // Фильтр по имени сессии
-            if (!string.IsNullOrWhiteSpace(sessionName))
-                query = query.Where(x => string.Equals(x.SessionName, sessionName, StringComparison.OrdinalIgnoreCase));
+            //if (!string.IsNullOrWhiteSpace(sessionName))
+            //    query = query.Where(x => string.Equals(x.SessionName, sessionName, StringComparison.OrdinalIgnoreCase));
 
             // Сортировка по времени (пример)
             query = query.OrderByDescending(x => x.Timestamp);
 
             // Фильтр по уровню лога
-            if (levels != null && levels.Any())
-                query = query.Where(x => levels.Contains(x.Level, StringComparer.OrdinalIgnoreCase));
+            //if (levels != null && levels.Any())
+            //    query = query.Where(x => levels.Contains(x.Level, StringComparer.OrdinalIgnoreCase));
 
             // Пагинация
             if (page.HasValue && logsPerPage.HasValue && logsPerPage.Value > 0)

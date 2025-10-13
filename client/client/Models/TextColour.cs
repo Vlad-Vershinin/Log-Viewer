@@ -1,11 +1,10 @@
 ﻿using Avalonia.Media;
-using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using System;
 
-namespace client.ViewModels;
+namespace client.Models;
 
-public class LogEntry
+public class TextColour
 {
     [Reactive] public bool IsHidden { get; set; } = false;
     [Reactive] public DateTime Time { get; set; }
