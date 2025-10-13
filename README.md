@@ -1,5 +1,4 @@
-## Инструкция по установке и использованию Terraform LogViewer
-
+# Инструкция по установке и использованию Terraform LogViewer
 
 
 ## Содержание
@@ -25,7 +24,13 @@
 
 
 ## API Endpoints
-- адрес сервера: http://localhost7084
+- **адрес сервера:** **`http://localhost:7084`**
+- **`Post /api/log/logs`**
+- **`Get /api/log/logs`**
+- **`Get /api/log/getfilename/{sessionName}`**
+- **`Post /api/session/connect/{sessionName}`**
+- **`Delete /api/session/delete/{sessionName}`**
+
 
 
 ## Использование приложения
