@@ -7,7 +7,7 @@
 - [Использование приложения](#-Использование-приложения)
 - [Архитектура приложения](#-Архитектура-Приложения)
 - [Диаграмма архитектуры приложения](#-диаграмма-архитектуры-приложения)
-- [Задачи](#Задачи)
+- [Задачи](#-Задачи)
 
 
 
@@ -25,10 +25,15 @@
 
 ## 🔌 API Endpoints
 - **адрес сервера:** **`http://localhost:7084`**
+
 ⏺ **`Post /api/log/logs`**
+
 ⏺ **`Get /api/log/logs`**
+
 ⏺ **`Get /api/log/getfilename/{sessionName}`**
+
 ⏺ **`Post /api/session/connect/{sessionName}`**
+
 ⏺ **`Delete /api/session/delete/{sessionName}`**
 
 
