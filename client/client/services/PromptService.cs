@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,8 +22,8 @@ namespace client.services
             _httpClient = httpClient;
         }
 
-
-        public async Task<List<ParsedLog>> GetLogsAsync(PromptPacket packet)
+        
+        public async Task GetLogsAsync(PromptPacket packet)
         {
             var query = $"?SessionName={packet.SessionName}" +
                         $"&Filename={packet.Filename}" +
@@ -34,7 +35,7 @@ namespace client.services
                         $"&SearchPrompt={packet.SearchPrompt}" +
                         $"&LevelFilter={packet.LevelFilter}";
 
-            var response = await _httpClient.GetAsync($"logs/logs{query}");
+            var response = await _httpClient.GetAsync($"logs/logs/{query}");
             response.EnsureSuccessStatusCode();
 
             var logs = await response.Content.ReadFromJsonAsync<List<LogEntry>>();
@@ -46,7 +47,7 @@ namespace client.services
                     Logs?.Add(log);
                 }
             }
-
         }
+        
     }
 }

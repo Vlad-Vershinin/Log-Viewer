@@ -29,13 +29,19 @@
 
 		<DockPanel>
 			<StackPanel DockPanel.Dock="Top" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
-				<TextBox Margin="5" VerticalAlignment="Bottom" Watermark="Поиск"></TextBox>
+				<TextBox Margin="5" DataContext="{Binding _promptPacket}" Text="{Binding SearchPrompt, Mode=TwoWay}" VerticalAlignment="Bottom" Watermark="Поиск"></TextBox>
 			</StackPanel>
 			<ScrollViewer Background="#000a2c" Grid.Row="0" Margin="5">
 				<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
 					<Border BorderThickness="0" BorderBrush="AliceBlue" VerticalAlignment="Stretch" MinHeight="200">
-						<lvc:CartesianChart Margin="5" Background="#1d2251" DataContext="{Binding TestChart}" Title="{Binding Title}" Series="{Binding Series}"></lvc:CartesianChart>
+						<lvc:CartesianChart Margin="5"  Background="#1d2251"
+									DataContext="{Binding GanttChart}"
+									Series="{Binding GanttSeries}"
+									YAxes="{Binding YAxes}">
+
+
+						</lvc:CartesianChart>
 					</Border>
 					<Border BorderThickness="0" BorderBrush="AliceBlue" VerticalAlignment="Stretch" MinHeight="200">
 						<lvc:CartesianChart Margin="5" Background="#1d2251" DataContext="{Binding TestChart}" Title="{Binding Title}" Series="{Binding Series}"></lvc:CartesianChart>
@@ -51,16 +57,24 @@
 			</ScrollViewer>
 
 		</DockPanel>
-		<ScrollViewer  Margin="5,0,5,5" Grid.Row="1" Grid.ColumnSpan="2">
-			<ListBox Background="#1e2b55">
-
-
-
-
-
+		
+			<ListBox ItemsSource="{Binding FilesAssigned}" Margin="5,0,5,5" Grid.Row="1" Grid.ColumnSpan="2" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+				<ListBox.ItemsPanel>
+					<ItemsPanelTemplate>
+						<StackPanel Orientation="Horizontal"/>
+					</ItemsPanelTemplate>
+				</ListBox.ItemsPanel>
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+							<TextBlock DockPanel.Dock="Top" Text="{Binding Name}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
+							<Button DockPanel.Dock="Bottom" Background="Transparent" Content="X"  Foreground="#ffb9c4"></Button>
+						</DockPanel>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
 			</ListBox>
 
-		</ScrollViewer>
+		
 
 
 
@@ -68,19 +82,11 @@
 			<DockPanel DockPanel.Dock="Top">
 				<Button DockPanel.Dock="Left" Background="#9e4a16" VerticalAlignment="Bottom" Margin="0,5,5,5" Content="Фильтры" Grid.Column="1"></Button>
 				<StackPanel DockPanel.Dock="Right" HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Bottom" Orientation="Horizontal">
-					<Button Margin="0,5,0,5">
-						<Image Source="avares://client/Assets/ArrowLeftGreat.png" Height="20"/>
-					</Button>
-					<Button Margin="0,5,5,5">
-						<Image Source="avares://client/Assets/ArrowLeft.png" Height="20"/>
-					</Button>
-					<TextBox Margin="0,5,0,5" Text="{Binding CurrentPage}" VerticalContentAlignment="Center" VerticalAlignment="Center"></TextBox>
-					<Button Margin="5,5,0,5">
-						<Image Source="avares://client/Assets/ArrowRight.png" Height="20"/>
-					</Button>
-					<Button Margin="0,5,0,5">
-						<Image Source="avares://client/Assets/ArrowRightGreat.png" Height="20"/>
-					</Button>
+					<Button Margin="0,5,0,5"  Command="{Binding FirstPage}"> <Image Source="avares://client/Assets/ArrowLeftGreat.png" Height="20"/> </Button>
+					<Button Margin="0,5,5,5" Command="{Binding PreviousPage}"> <Image Source="avares://client/Assets/ArrowLeft.png" Height="20"/> </Button>
+					<TextBox Margin="0,5,0,5" Text="{Binding CurrentPage, Mode=TwoWay}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"></TextBox>
+					<Button Margin="5,5,0,5" Command="{Binding NextPage}"> <Image Source="avares://client/Assets/ArrowRight.png" Height="20"/> </Button>
+					<Button Margin="0,5,0,5"  Command="{Binding LastPage}"> <Image Source="avares://client/Assets/ArrowRightGreat.png" Height="20"/> </Button>
 					<Button Content="Обновить"  Background="Green" Margin="5" Command="{Binding CreateBoardCommand}"></Button>
 					<Button Margin="5" Command="{Binding OpenOptionPane}">
 						<Image Source="avares://client/Assets/Additional.png" Height="20"/>
@@ -89,8 +95,8 @@
 				</StackPanel>
 			</DockPanel>
 			<Border VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="1" Margin="0,5,5,5">
-				<TreeDataGrid Source="{Binding LogsSource}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-
+				<TreeDataGrid Name="LogGrid" Source="{Binding LogsSource}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+					
 				</TreeDataGrid>
 
 			</Border>
@@ -106,17 +112,54 @@
 				<Border Background="#0e004e">
 					<Border Margin="5" Background="#0d0035">
 						<StackPanel>
-							<Button Content="Имрорт логов (*.json | *.txt)" HorizontalAlignment="Stretch"></Button>
-							<Button Content="Параметры" HorizontalAlignment="Stretch"></Button>
-							<Button Content="Выйти из сессии" HorizontalAlignment="Stretch"></Button>
+							<Button Content="Имрорт логов (*.json | *.txt)" Command="{Binding LoadLogsCommand}" Background="Transparent" HorizontalAlignment="Stretch"></Button>
+							<CheckBox DataContext="{Binding _promptPacket}" IsChecked="{Binding ShowHidden}" Content="Показ скрытых элементов" Margin="8,0,0,0"></CheckBox>
+							<CheckBox DataContext="{Binding _promptPacket}"  IsChecked="{Binding PartialComparing}" Content="Поиск по частичному совпадению" Margin="8,0,0,0"></CheckBox>
+							<Button Content="Выйти из сессии" Foreground="#ffb9c4" Command="{Binding LeaveSessionCommand}" Background="Transparent" HorizontalAlignment="Stretch"></Button>
+							<Button Content="Прервать и очистить сессию из сессии" Foreground="#ffb9c4" Command="{Binding DeleteSessionCommand}" Background="Transparent" HorizontalAlignment="Stretch"></Button>
 						</StackPanel>
 					</Border>
 				</Border>
 			</SplitView.Pane>
-			<SplitView.Content>
-			</SplitView.Content>
 		</SplitView>
 
+		<SplitView Grid.ColumnSpan="2" OpenPaneLength="800" Grid.RowSpan="2" IsPaneOpen="{Binding IsFullInfoPaneIsOpen, Mode=TwoWay}" PanePlacement="Right">
+			<SplitView.Pane>
+				<Border Background="#000a2c">
+					<Border Margin="5">
 
+
+
+						<ScrollViewer DataContext="{Binding DoubleTappedLog}" VerticalScrollBarVisibility="Visible">
+							<StackPanel>
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="100"></ColumnDefinition>
+									<ColumnDefinition></ColumnDefinition>
+								</Grid.ColumnDefinitions>
+
+								<StackPanel>
+									<TextBlock Margin="5" Text="Время :"></TextBlock>
+									<TextBlock Margin="5"  Text="Сообщение :"></TextBlock>
+									<TextBlock Margin="5"  Text="Уровень :"></TextBlock>
+								</StackPanel>
+								<StackPanel Grid.Column="1">
+									<TextBlock Margin="5" Text="{Binding Timestamp}"></TextBlock>
+									<TextBlock Margin="5"  Text="{Binding Message}"></TextBlock>
+									<TextBlock Margin="5"  Text="{Binding Level}"></TextBlock>
+									
+								</StackPanel>
+							</Grid>
+								<Expander Margin="5">
+									<Expander.Header>
+										<TextBlock Text="Другие свойства"></TextBlock>
+									</Expander.Header>
+								</Expander>
+							</StackPanel>
+						</ScrollViewer>
+					</Border>
+				</Border>
+			</SplitView.Pane>
+		</SplitView>
 	</Grid>
 </UserControl>

@@ -5,18 +5,17 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace client.services
-{
-    public class HttpClientService
-    {
-        public HttpClient _HttpClient { get; set; }
+namespace client.services;
 
-        public HttpClientService()
+public class HttpClientService
+{
+    public HttpClient HttpClient { get; set; }
+
+    public HttpClientService()
+    {
+        HttpClient = new HttpClient
         {
-            _HttpClient = new HttpClient
-            {
-                BaseAddress = new Uri("http://localhost:7084/api")
-            };
-        }
+            BaseAddress = new Uri("http://localhost:7084/api/")
+        };
     }
 }

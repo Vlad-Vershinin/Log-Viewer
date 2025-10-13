@@ -1,17 +1,12 @@
 ﻿using client.services.interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace client.services
+namespace client.services;
+
+public class Notification : IReadable
 {
-    public class Notification : IReadable
-    {
-        public string Title { get; set; }
-        public string Message { get; set; }
-        public bool IsRead { get; set; }
-        public DateTime? ReadDate { get; set; }
-    }
+    public string Title { get; set; } = string.Empty;
+    public string Message { get; set; } = string.Empty;
+    public bool IsRead { get; set; }
+    public DateTime? ReadDate { get; set; }
 }

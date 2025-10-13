@@ -15,28 +15,28 @@ public class SessionController : ControllerBase
         _sessionService = sessionService;
     }
 
-    [HttpPost("connect")]
-    public async Task<IActionResult> CreateSession([FromBody] string session)
+    [HttpPost("connect/{SessionName}")]
+    public async Task<IActionResult> CreateSession(string SessionName)
     {
-        if (string.IsNullOrWhiteSpace(session))
+        if (string.IsNullOrWhiteSpace(SessionName))
         {
             return BadRequest("Session name is empty");
         }
 
-        await _sessionService.CreateSession(new Session { SessionName = session });
+        await _sessionService.CreateSession(new Session { SessionName = SessionName });
 
         return Ok();
     }
 
-    [HttpDelete("delete")]
-    public async Task<IActionResult> DeleteSession([FromBody] string session)
+    [HttpDelete("delete/{sessionName}")]
+    public async Task<IActionResult> DeleteSession(string sessionName)
     {
-        if (string.IsNullOrWhiteSpace(session))
+        if (string.IsNullOrWhiteSpace(sessionName))
         {
             return BadRequest("Session name is empty");
         }
 
-        await _sessionService.DeleteSession(new Session { SessionName = session });
+        await _sessionService.DeleteSession(new Session { SessionName = sessionName });
         return Ok();
     }
 }

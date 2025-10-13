@@ -1,8 +1,6 @@
 ﻿using client.services.interfaces;
 using client.ViewModels;
-using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using System;
 using System.Collections.ObjectModel;
 
 namespace client.services;
@@ -10,8 +8,8 @@ namespace client.services;
 public class SessionService
 {
     [Reactive] public string SessionName { get; set; } = string.Empty;
-
-    public ObservableCollection<LogEntry>? Logs { get; set; } = [];
+    public ObservableCollection<TextColour>? Logs { get; set; } = [];
+    public ObservableCollection<string> FileNames { get; set; } = [];
 
     public void Init(string sessionName)
     {
