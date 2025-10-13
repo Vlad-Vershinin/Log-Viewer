@@ -1,4 +1,4 @@
-﻿using client.ViewModels;
+﻿using client.Presentation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,7 +15,7 @@ namespace client.services
     {
         private readonly HttpClient _httpClient;
 
-        public ObservableCollection<LogEntry>? Logs { get; set; } = [];
+        public ObservableCollection<TextColour>? Logs { get; set; } = [];
 
         public PromptService(HttpClient httpClient)
         {
@@ -38,7 +38,7 @@ namespace client.services
             var response = await _httpClient.GetAsync($"logs/logs/{query}");
             response.EnsureSuccessStatusCode();
 
-            var logs = await response.Content.ReadFromJsonAsync<List<LogEntry>>();
+            var logs = await response.Content.ReadFromJsonAsync<List<TextColour>>();
             Logs?.Clear();
             if (logs != null)
             {

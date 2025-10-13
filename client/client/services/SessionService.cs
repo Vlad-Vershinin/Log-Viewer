@@ -1,5 +1,5 @@
-﻿using client.services.interfaces;
-using client.ViewModels;
+﻿using client.Presentation;
+using client.services.interfaces;
 using ReactiveUI.Fody.Helpers;
 using System.Collections.ObjectModel;
 
